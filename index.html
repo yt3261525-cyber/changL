@@ -1,143 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#e0f2fe">
-    <title>☁️ 长乐食堂 Pro 🎀</title>
-    <style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#e0f2fe">
+  <title>☁️ 长乐食堂 Pro 🎀 - AI模型中转与福利导航</title>
+  <style>
         /* ================= 核心变量与主题 ================= */
         :root {
             --bg-main: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 40%, #fdf2f8 100%);
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.88);
             --text-main: #1e3a8a;
             --text-sub: #64748b;
             --accent: #3b82f6;
-            --border-color: rgba(255, 255, 255, 0.9);
+            --accent-hover: #2563eb;
+            --border-color: rgba(255, 255, 255, 0.95);
             --shadow: 0 4px 15px -5px rgba(100, 150, 200, 0.2);
+            --shadow-hover: 0 8px 25px -5px rgba(59, 130, 246, 0.25);
             --tag-signin-bg: #e0f2fe; --tag-signin-text: #0284c7;
             --tag-trial-bg: #fce7f3; --tag-trial-text: #db2777;
+            --tag-note-bg: #fef3c7; --tag-note-text: #b45309;
+            --tag-check-bg: #dcfce7; --tag-check-text: #15803d;
             --toast-bg: #1e293b; --toast-text: #fff;
-            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: rgba(255, 255, 255, 0.96);
             --card-radius: 16px;
+            --note-bg: rgba(248, 250, 252, 0.85);
+            --note-border: #e2e8f0;
         }
-        body[data-theme="pink"] { --bg-main: linear-gradient(135deg, #fdf2f8 0%, #fff1f2 100%); --text-main: #831843; --accent: #ec4899; --tag-signin-bg: #fce7f3; --tag-signin-text: #be185d; --tag-trial-bg: #ffedd5; --tag-trial-text: #c2410c; --nav-bg: rgba(253, 242, 248, 0.95); }
-        body[data-theme="green"] { --bg-main: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); --text-main: #064e3b; --accent: #10b981; --tag-signin-bg: #d1fae5; --tag-signin-text: #047857; --tag-trial-bg: #fef3c7; --tag-trial-text: #b45309; --nav-bg: rgba(236, 253, 245, 0.95); }
-        body[data-theme="dark"] { --bg-main: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%); --card-bg: rgba(30, 41, 59, 0.85); --text-main: #f8fafc; --text-sub: #94a3b8; --accent: #818cf8; --border-color: rgba(255, 255, 255, 0.1); --tag-signin-bg: rgba(14, 165, 233, 0.2); --tag-signin-text: #38bdf8; --tag-trial-bg: rgba(236, 72, 153, 0.2); --tag-trial-text: #f472b6; --toast-bg: #f8fafc; --toast-text: #0f172a; --nav-bg: rgba(15, 23, 42, 0.95); }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, "PingFang SC", sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
-        body { background: var(--bg-main); color: var(--text-main); min-height: 100vh; overflow-x: hidden; padding-bottom: calc(70px + env(safe-area-inset-bottom)); background-attachment: fixed; transition: background 0.3s, color 0.3s; overscroll-behavior-y: contain; }
+        body[data-theme="pink"] {
+            --bg-main: linear-gradient(135deg, #fdf2f8 0%, #fff1f2 100%);
+            --text-main: #831843;
+            --accent: #ec4899;
+            --accent-hover: #db2777;
+            --tag-signin-bg: #fce7f3; --tag-signin-text: #be185d;
+            --tag-trial-bg: #ffedd5; --tag-trial-text: #c2410c;
+            --nav-bg: rgba(253, 242, 248, 0.96);
+            --note-bg: rgba(255, 241, 242, 0.8);
+            --note-border: #fecdd3;
+        }
+        body[data-theme="green"] {
+            --bg-main: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            --text-main: #064e3b;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --tag-signin-bg: #d1fae5; --tag-signin-text: #047857;
+            --tag-trial-bg: #fef3c7; --tag-trial-text: #b45309;
+            --nav-bg: rgba(236, 253, 245, 0.96);
+            --note-bg: rgba(240, 253, 244, 0.8);
+            --note-border: #a7f3d0;
+        }
+        body[data-theme="dark"] {
+            --bg-main: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            --card-bg: rgba(30, 41, 59, 0.88);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --tag-signin-bg: rgba(14, 165, 233, 0.2); --tag-signin-text: #38bdf8;
+            --tag-trial-bg: rgba(236, 72, 153, 0.2); --tag-trial-text: #f472b6;
+            --tag-note-bg: rgba(245, 158, 11, 0.2); --tag-note-text: #fbbf24;
+            --tag-check-bg: rgba(16, 185, 129, 0.2); --tag-check-text: #34d399;
+            --toast-bg: #f8fafc; --toast-text: #0f172a;
+            --nav-bg: rgba(15, 23, 42, 0.96);
+            --note-bg: rgba(15, 23, 42, 0.7);
+            --note-border: #334155;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-main); color: var(--text-main); min-height: 100vh; overflow-x: hidden; padding-bottom: calc(75px + env(safe-area-inset-bottom)); background-attachment: fixed; transition: background 0.3s, color 0.3s; }
         
         #custom-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -2; opacity: 0.25; pointer-events: none; display: none; }
-
+        
         /* ================= 通用组件 ================= */
         .page { display: none; opacity: 0; transition: opacity 0.2s; padding-bottom: 20px; }
         .page.active { display: block; opacity: 1; }
-        .container { max-width: 600px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
+        .container { max-width: 640px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
         
         /* Ripple 水波纹 */
-        .ripple-btn { position: relative; overflow: hidden; }
-        .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        .ripple-btn { position: relative; overflow: hidden; cursor: pointer; }
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.45); transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
         @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
-
-        /* 顶部 */
-        .header-area { margin-bottom: 15px; transition: all 0.3s; overflow: hidden; max-height: 150px; }
+        
+        /* 顶部导航与问候 */
+        .header-area { margin-bottom: 12px; transition: all 0.3s; overflow: hidden; max-height: 160px; }
         .header-area.collapsed { max-height: 0; margin-bottom: 0; opacity: 0; }
         .header-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px; }
-        .header h1 { font-size: 24px; font-weight: 900; background: linear-gradient(to right, var(--accent), #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .header h1 { font-size: 23px; font-weight: 900; background: linear-gradient(to right, var(--accent), #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 0.5px; }
         .clock-box { font-family: monospace; font-size: 13px; font-weight: bold; color: var(--text-sub); }
-        .mood-box { font-size: 12px; color: var(--accent); font-weight: bold; background: var(--card-bg); padding: 4px 10px; border-radius: 8px; display: inline-block; border: 1px solid var(--border-color); }
-
+        .mood-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .mood-box { font-size: 12px; color: var(--accent); font-weight: bold; background: var(--card-bg); padding: 5px 10px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border-color); box-shadow: var(--shadow); }
+        .privacy-toggle-btn { font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-sub); cursor: pointer; box-shadow: var(--shadow); }
+        .privacy-toggle-btn.active { color: #f59e0b; border-color: #f59e0b; }
+        
+        /* 今日打卡简报 */
+        .checkin-banner { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); font-size: 12px; }
+        .checkin-progress { display: flex; align-items: center; gap: 6px; font-weight: bold; }
+        .checkin-bar-wrap { width: 90px; height: 6px; background: rgba(0,0,0,0.06); border-radius: 3px; overflow: hidden; }
+        body[data-theme="dark"] .checkin-bar-wrap { background: rgba(255,255,255,0.1); }
+        .checkin-bar-inner { height: 100%; background: #10b981; border-radius: 3px; transition: width 0.3s; }
+        .checkin-action-btn { background: var(--accent); color: white; border: none; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        
         /* 快捷面板 (置顶) */
-        .quick-panel { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+        .quick-panel { display: flex; justify-content: flex-start; margin-bottom: 12px; gap: 8px; overflow-x: auto; scrollbar-width: none; }
         .quick-panel::-webkit-scrollbar { display: none; }
-        .quick-item { flex: 0 0 70px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: var(--shadow); text-decoration: none; color: var(--text-main); cursor: pointer; position: relative; }
+        .quick-item { flex: 0 0 68px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 9px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: var(--shadow); text-decoration: none; color: var(--text-main); cursor: pointer; position: relative; }
         .quick-item span:first-child { font-size: 20px; }
         .quick-item span:last-child { font-size: 10px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
-        .quick-item .unpin-btn { position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; border: none; }
-
+        .quick-item .unpin-btn { position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+        
         /* 搜索与筛选 */
         .controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .search-row { display: flex; gap: 10px; align-items: center; position: relative; }
-        .search-box { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 12px; flex: 1; position: relative; box-shadow: var(--shadow); z-index: 102; }
+        .search-row { display: flex; gap: 8px; align-items: center; position: relative; }
+        .search-box { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 9px 12px; flex: 1; position: relative; box-shadow: var(--shadow); z-index: 102; }
         .search-box input { background: transparent; border: none; outline: none; color: var(--text-main); font-size: 14px; width: 100%; padding-right: 20px; }
-        .clear-btn { position: absolute; right: 10px; background: none; border: none; color: var(--text-sub); font-size: 14px; }
-        .sort-btn { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 12px; font-size: 14px; font-weight: bold; color: var(--text-main); box-shadow: var(--shadow); white-space: nowrap; z-index: 101;}
+        .clear-btn { position: absolute; right: 10px; background: none; border: none; color: var(--text-sub); font-size: 14px; cursor: pointer; }
+        .sort-btn { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 9px 12px; font-size: 13px; font-weight: bold; color: var(--text-main); box-shadow: var(--shadow); white-space: nowrap; z-index: 101; cursor: pointer; }
         
-        .suggest-box { position: absolute; top: 110%; left: 0; width: calc(100% - 60px); background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow); display: none; flex-direction: column; z-index: 103; overflow: hidden; }
+        .suggest-box { position: absolute; top: 110%; left: 0; width: calc(100% - 60px); background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-hover); display: none; flex-direction: column; z-index: 103; overflow: hidden; }
         .suggest-box.show { display: flex; }
-        .suggest-item { padding: 10px 15px; font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .suggest-item { padding: 10px 15px; font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; }
         
-        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 5px; }
+        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
         .filter-scroll::-webkit-scrollbar { display: none; }
-        .filter-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-sub); padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; white-space: nowrap; transition: all 0.2s; box-shadow: var(--shadow); }
+        .filter-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-sub); padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; white-space: nowrap; transition: all 0.2s; box-shadow: var(--shadow); cursor: pointer; }
         .filter-btn.active { background: var(--text-main); color: var(--card-bg); border-color: var(--text-main); }
-
+        
         /* 幸运星 */
-        .lucky-box { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border: 2px solid #fca5a5; border-radius: 12px; padding: 10px 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15); }
-        .lucky-title { font-size: 12px; color: #ef4444; font-weight: bold; display: flex; align-items: center; gap: 4px; }
-        .lucky-name { font-size: 15px; font-weight: 800; margin-top: 2px; }
-        .lucky-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: bold; text-decoration: none; }
-
+        .lucky-box { background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.75)); border: 2px solid #fca5a5; border-radius: 12px; padding: 9px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15); cursor: pointer; }
+        body[data-theme="dark"] .lucky-box { background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(20,25,40,0.8)); border-color: #f87171; }
+        .lucky-title { font-size: 11px; color: #ef4444; font-weight: bold; display: flex; align-items: center; gap: 4px; }
+        .lucky-name { font-size: 14px; font-weight: 800; margin-top: 2px; }
+        .lucky-btn { background: #ef4444; color: white; border: none; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; text-decoration: none; }
+        
         /* ================= 卡片样式 ================= */
         .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 500px) { .grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
         
-        .card { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--card-radius); padding: 14px; text-decoration: none; color: inherit; position: relative; box-shadow: var(--shadow); transition: transform 0.1s; overflow: hidden; cursor: pointer; }
-        .card:active { transform: scale(0.96); }
+        .card { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--card-radius); padding: 13px; text-decoration: none; color: inherit; position: relative; box-shadow: var(--shadow); transition: transform 0.12s, box-shadow 0.2s; overflow: hidden; cursor: pointer; }
+        .card:hover { box-shadow: var(--shadow-hover); }
+        .card:active { transform: scale(0.98); }
         .card::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 50%; height: 15px; border-radius: 50%; filter: blur(10px); opacity: 0.4; z-index: 0; }
         .card.glow-green::after { background: #10b981; }
         .card.glow-pink::after { background: #ec4899; }
         .card.glow-both::after { background: linear-gradient(90deg, #10b981, #ec4899); }
-
-        .card-top { display: flex; align-items: center; margin-bottom: 10px; position: relative; z-index: 2; }
-        .avatar { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-right: 10px; }
+        
+        .card-top { display: flex; align-items: center; margin-bottom: 8px; position: relative; z-index: 2; }
+        .avatar { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-right: 10px; flex-shrink: 0; }
         body[data-theme="dark"] .avatar { background: #334155; }
         
-        .card-title { font-size: 15px; font-weight: 800; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
-        .highlight-text { color: #ef4444; } /* 搜索高亮 */
-        .badge-private { font-size: 9px; background: #fef08a; color: #854d0e; padding: 1px 5px; border-radius: 4px; font-weight: bold; }
-        .heartbeat { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 1.5s infinite; }
+        .card-title-wrap { flex: 1; min-width: 0; }
+        .card-title { font-size: 15px; font-weight: 800; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .badge-private { font-size: 9px; background: #fef08a; color: #854d0e; padding: 1px 5px; border-radius: 4px; font-weight: bold; flex-shrink: 0; }
+        .heartbeat { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 1.5s infinite; flex-shrink: 0; }
         
-        .card-hint { font-size: 11px; color: var(--text-sub); font-weight: 500; }
-        .tags { display: flex; gap: 6px; margin-top: auto; position: relative; z-index: 2; flex-wrap: wrap; }
-        .tag { font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: 700; }
+        .card-hint { font-size: 11px; color: var(--text-sub); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+        .tags { display: flex; gap: 5px; margin-top: 6px; margin-bottom: 6px; position: relative; z-index: 2; flex-wrap: wrap; }
+        .tag { font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px; }
         .tag.signin { background: var(--tag-signin-bg); color: var(--tag-signin-text); }
         .tag.trial { background: var(--tag-trial-bg); color: var(--tag-trial-text); }
         .tag.none { background: #f1f5f9; color: #94a3b8; }
-
-        /* 操作按钮 */
-        .action-group { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; z-index: 5; }
-        .action-btn { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-sub); font-size: 13px; display: flex; align-items: center; justify-content: center; }
+        .tag.note-tag { background: var(--tag-note-bg); color: var(--tag-note-text); }
+        .tag.checked-tag { background: var(--tag-check-bg); color: var(--tag-check-text); }
+        
+        /* 打卡按钮 */
+        .checkin-pill { font-size: 10px; padding: 2px 8px; border-radius: 6px; border: 1px solid #10b981; background: transparent; color: #10b981; font-weight: bold; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 3px; }
+        .checkin-pill.done { background: #10b981; color: white; }
+        
+        /* 操作按钮组 */
+        .action-group { position: absolute; top: 12px; right: 12px; display: flex; gap: 5px; z-index: 5; }
+        .action-btn { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-sub); font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
         .action-btn.active { color: #ef4444; background: #fee2e2; border-color: #fca5a5; }
         .action-btn.pinned { color: var(--accent); background: var(--tag-signin-bg); }
-
+        
         /* 极客数据面板 */
-        .data-panel { margin-top: 12px; background: var(--bg-main); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 6px; z-index: 2; position: relative; }
-        body[data-theme="dark"] .data-panel { background: rgba(0,0,0,0.2); }
-        .data-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-        .data-text { color: var(--text-sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 8px; flex: 1; }
-        .data-copy { background: var(--accent); color: #fff; border: none; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; flex-shrink: 0; }
-
+        .data-panel { margin-top: 6px; background: var(--bg-main); border-radius: 10px; padding: 7px 9px; display: flex; flex-direction: column; gap: 5px; z-index: 2; position: relative; }
+        body[data-theme="dark"] .data-panel { background: rgba(0,0,0,0.25); }
+        .data-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+        .data-text { color: var(--text-sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 6px; flex: 1; font-family: monospace; }
+        .data-btn-group { display: flex; gap: 4px; flex-shrink: 0; }
+        .data-copy { background: var(--accent); color: #fff; border: none; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .data-copy.purple { background: #8b5cf6; }
+        .data-copy.green { background: #10b981; }
+        .data-copy.gray { background: #64748b; }
+        
+        /* ================= 专属备注区域 ================= */
+        .note-section { margin-top: 8px; border-radius: 10px; background: var(--note-bg); border: 1px dashed var(--note-border); padding: 7px 9px; position: relative; z-index: 3; transition: all 0.2s; }
+        .note-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .note-label { font-size: 11px; font-weight: 700; color: var(--text-sub); display: flex; align-items: center; gap: 4px; }
+        .note-actions { display: flex; gap: 4px; align-items: center; }
+        .note-action-btn { background: none; border: none; font-size: 11px; color: var(--text-sub); cursor: pointer; padding: 1px 4px; border-radius: 4px; transition: background 0.15s; }
+        .note-action-btn:hover { background: rgba(0,0,0,0.06); }
+        body[data-theme="dark"] .note-action-btn:hover { background: rgba(255,255,255,0.1); }
+        
+        .note-input { width: 100%; border: none; outline: none; background: transparent; font-size: 12px; color: var(--text-main); resize: none; overflow: hidden; min-height: 22px; line-height: 1.4; display: block; font-family: inherit; }
+        .note-input::placeholder { color: var(--text-sub); opacity: 0.7; font-size: 11px; }
+        .note-input.masked { -webkit-text-security: disc; text-security: disc; font-family: monospace; letter-spacing: 2px; }
+        
         /* 侧滑删除 */
         .swipe-container { position: relative; overflow: hidden; border-radius: var(--card-radius); }
-        .swipe-delete { position: absolute; right: 0; top: 0; height: 100%; width: 70px; background: #ef4444; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; z-index: 1; }
+        .swipe-delete { position: absolute; right: 0; top: 0; height: 100%; width: 70px; background: #ef4444; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; z-index: 1; cursor: pointer; }
         .swipe-content { position: relative; z-index: 2; transition: transform 0.2s; background: var(--card-bg); margin-bottom: 0; }
-
-        /* ================= 设置页面 ================= */
+        
+        /* ================= 设置页面与统计 ================= */
         .settings-group { background: var(--card-bg); border-radius: 16px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: var(--shadow); }
-        .settings-title { font-size: 13px; font-weight: bold; color: var(--text-sub); margin-bottom: 12px; }
-        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 15px; font-weight: 600; }
+        .settings-title { font-size: 13px; font-weight: bold; color: var(--text-sub); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 14px; font-weight: 600; cursor: pointer; }
         .settings-item:last-child { border-bottom: none; }
         
         .theme-dots { display: flex; gap: 10px; flex-wrap: wrap; align-items: center;}
-        .t-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; }
+        .t-dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
         .t-dot.active { border-color: var(--text-main); transform: scale(1.1); }
         .t-blue { background: linear-gradient(135deg, #e0f2fe, #3b82f6); }
         .t-pink { background: linear-gradient(135deg, #fdf2f8, #ec4899); }
         .t-green { background: linear-gradient(135deg, #ecfdf5, #10b981); }
         .t-dark { background: linear-gradient(135deg, #0f172a, #1e1b4b); }
-
+        
         /* 音频可视化 */
         .audio-viz { display: flex; gap: 2px; height: 16px; align-items: flex-end; }
         .audio-bar { width: 3px; background: var(--accent); border-radius: 2px; height: 4px; }
@@ -146,342 +224,829 @@
         .audio-viz.playing .audio-bar:nth-child(3) { animation-delay: 0.2s; }
         .audio-viz.playing .audio-bar:nth-child(4) { animation-delay: 0.15s; }
         @keyframes bounce { to { height: 16px; } }
-
-        /* 数据环 */
-        .data-ring { display: flex; justify-content: space-around; padding-top: 10px; }
+        
+        /* 数据环与统计卡片 */
+        .data-ring { display: flex; justify-content: space-around; padding-top: 8px; margin-bottom: 14px; }
         .ring-item { display: flex; flex-direction: column; align-items: center; position: relative; }
-        .ring-svg { width: 60px; height: 60px; transform: rotate(-90deg); }
+        .ring-svg { width: 64px; height: 64px; transform: rotate(-90deg); }
         .ring-bg { fill: none; stroke: #e2e8f0; stroke-width: 6; }
-        .ring-fill { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 150; stroke-dashoffset: 150; transition: stroke-dashoffset 1s; }
-        .ring-text { position: absolute; top: 22px; font-size: 12px; font-weight: bold; }
-
+        body[data-theme="dark"] .ring-bg { stroke: #334155; }
+        .ring-fill { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 150; stroke-dashoffset: 150; transition: stroke-dashoffset 0.8s ease; }
+        .ring-text { position: absolute; top: 23px; font-size: 13px; font-weight: 800; }
+        
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .stat-card { background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 6px; text-align: center; }
+        .stat-num { font-size: 16px; font-weight: 900; color: var(--accent); }
+        .stat-label { font-size: 10px; color: var(--text-sub); margin-top: 2px; }
+        
         /* 成就徽章 */
-        .badges { display: flex; gap: 10px; flex-wrap: wrap; }
-        .badge-item { background: var(--bg-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 4px; opacity: 0.4; filter: grayscale(1); transition: all 0.3s; }
+        .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge-item { background: var(--bg-main); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 4px; opacity: 0.45; filter: grayscale(1); transition: all 0.3s; }
         .badge-item.unlocked { opacity: 1; filter: none; border-color: var(--accent); color: var(--accent); background: var(--card-bg); box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2); }
-
-        .upload-btn { background: var(--accent); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; border: none; font-weight: bold; position: relative; overflow: hidden; }
-        .upload-btn input[type="file"] { position: absolute; top:0; left:0; width:100%; height:100%; opacity: 0; }
-
+        
+        .upload-btn { background: var(--accent); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; border: none; font-weight: bold; position: relative; overflow: hidden; cursor: pointer; }
+        .upload-btn input[type="file"] { position: absolute; top:0; left:0; width:100%; height:100%; opacity: 0; cursor: pointer; }
+        
         /* ================= 底部导航 ================= */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(15px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); z-index: 900; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--text-sub); font-size: 10px; font-weight: bold; background: none; border: none; width: 25%; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--text-sub); font-size: 10px; font-weight: bold; background: none; border: none; width: 20%; cursor: pointer; }
         .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
         .nav-item.active { color: var(--accent); }
-
-        .back-top { position: fixed; bottom: 90px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; font-size: 18px; z-index: 800; opacity: 0; pointer-events: none; transition: all 0.3s; backdrop-filter: blur(10px); }
+        
+        .back-top { position: fixed; bottom: 85px; right: 18px; width: 42px; height: 42px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; font-size: 18px; z-index: 800; opacity: 0; pointer-events: none; transition: all 0.3s; backdrop-filter: blur(10px); cursor: pointer; }
         .back-top.show { opacity: 1; pointer-events: auto; }
-
-        /* 弹窗 */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+        
+        /* 弹窗通用 */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .modal-box { background: var(--card-bg); border-radius: 20px; padding: 20px; width: 85%; max-width: 320px; text-align: center; max-height: 80vh; overflow-y: auto; color: var(--text-main); }
+        .modal-box { background: var(--card-bg); border-radius: 20px; padding: 20px; width: 88%; max-width: 360px; text-align: center; max-height: 82vh; overflow-y: auto; color: var(--text-main); box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid var(--border-color); }
         .form-group { margin-bottom: 12px; text-align: left; }
         .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: var(--text-sub); }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); font-size: 14px; }
-        .checkbox-group { display: flex; gap: 15px; }
-        .checkbox-group label { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: normal; }
-        .modal-btn { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 12px; font-size: 15px; font-weight: bold; width: 100%; margin-top: 10px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); font-size: 13px; }
+        .modal-btn { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 11px; font-size: 14px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
         .modal-btn.outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-
+        .modal-btn.danger { background: #ef4444; }
+        .modal-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .modal-actions .modal-btn { margin-top: 0; }
+        
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text-sub); font-size: 14px; grid-column: 1/-1; }
         .empty-state div:first-child { font-size: 40px; margin-bottom: 10px; }
-
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--toast-bg); color: var(--toast-text); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: bold; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 4000; }
+        
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--toast-bg); color: var(--toast-text); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: bold; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 4000; box-shadow: 0 5px 20px rgba(0,0,0,0.2); text-align: center; max-width: 85%; }
         #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        
+        /* 客户端接入代码高亮展示框 */
+        .code-block { background: #1e293b; color: #f8fafc; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 11px; text-align: left; overflow-x: auto; margin-top: 8px; white-space: pre-wrap; word-break: break-all; }
         
         @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
     </style>
-</head>
-<body data-theme="blue">
-    <div id="custom-bg"></div>
-
-    <!-- 首页 -->
-    <div id="page-home" class="page active">
-        <div class="container">
-            <div class="header-area" id="headerArea">
-                <div class="header-top">
-                    <h1 id="greeting">☁️ 长乐食堂</h1>
-                    <div class="clock-box" id="clock">00:00:00</div>
-                </div>
-                <div class="mood-box" id="mood">✨ 愿你今天也能抽到想要的 SSR</div>
-            </div>
-
-            <div class="quick-panel" id="quickPanel"></div>
-
-            <div class="lucky-box ripple-btn" id="luckyBox" style="display: none;" onclick="goLucky()">
-                <div>
-                    <div class="lucky-title">🔮 今日幸运星</div>
-                    <div class="lucky-name" id="luckyName">站点名字</div>
-                </div>
-                <div class="lucky-btn">去逛逛</div>
-            </div>
-
-            <div class="controls">
-                <div class="search-row">
-                    <div class="search-box">
-                        <span>🔍</span>
-                        <input type="text" id="searchInput" placeholder="搜索所有站点..." oninput="handleSearch(this.value)">
-                        <button class="clear-btn" onclick="clearSearch()">❌</button>
-                        <div class="suggest-box" id="suggestBox"></div>
-                    </div>
-                    <button class="sort-btn ripple-btn" onclick="cycleSort()" id="sortBtn">🔀 默认</button>
-                </div>
-                <div class="filter-scroll">
-                    <button class="filter-btn active" data-filter="all">全部</button>
-                    <button class="filter-btn" data-filter="both">✨ 双修</button>
-                    <button class="filter-btn" data-filter="signin">📅 仅签到</button>
-                    <button class="filter-btn" data-filter="trial">🧋 仅试吃</button>
-                    <button class="filter-btn" data-filter="none">👾 白板</button>
-                </div>
-            </div>
-            <div class="grid" id="homeGrid"></div>
-        </div>
+ </head>
+ <body data-theme="blue">
+  <div id="custom-bg"></div>
+  <!-- 首页 -->
+  <div id="page-home" class="page active">
+   <div class="container">
+    <div class="header-area" id="headerArea">
+     <div class="header-top">
+      <h1 id="greeting">☁️ 长乐食堂 Pro</h1>
+      <div class="clock-box" id="clock">00:00:00</div>
+     </div>
+     <div class="mood-row">
+      <div class="mood-box" id="mood">✨ 愿你今天也能抽到想要的 SSR</div>
+      <button class="privacy-toggle-btn ripple-btn" id="privacyBtn" onclick="toggleGlobalPrivacy()">👁️ 备注显式</button>
+     </div>
     </div>
-
-    <!-- 收藏 -->
-    <div id="page-fav" class="page"><div class="container"><h1 style="font-size: 22px; margin-bottom: 15px;">⭐ 我的收藏</h1><div class="grid" id="favGrid"></div></div></div>
-
-    <!-- 私有 -->
-    <div id="page-memo" class="page">
-        <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h1 style="font-size: 22px;">📝 私有备忘录</h1>
-                <button class="sort-btn ripple-btn" style="background: var(--accent); color: white;" onclick="openAddModal()">+ 新增</button>
-            </div>
-            <div class="search-box" style="margin-bottom: 15px;"><span>🔍</span><input type="text" id="memoSearch" placeholder="搜索私有链接..." oninput="renderMemoPage()"></div>
-            <div class="grid" id="memoGrid"></div>
-        </div>
+    <!-- 今日签到进度条 -->
+    <div class="checkin-banner" id="checkinBanner">
+     <div class="checkin-progress">
+      <span>📅 今日签到打卡:</span>
+      <div class="checkin-bar-wrap">
+       <div class="checkin-bar-inner" id="checkinBar" style="width: 0%;"></div>
+      </div>
+      <span id="checkinStat" style="color:var(--accent);">0/0</span>
+     </div>
+     <div style="display:flex; gap:6px;">
+      <button class="checkin-action-btn ripple-btn" onclick="quickFilterPending()">待签列表</button>
+      <button class="checkin-action-btn ripple-btn" style="background:#10b981;" onclick="markAllCheckinDone()">一键打卡</button>
+     </div>
     </div>
-
-    <!-- 通知 -->
-    <div id="page-notice" class="page">
-        <div class="container">
-            <h1 style="font-size: 22px; margin-bottom: 15px;">🔔 消息通知</h1>
-            <div id="noticeList"></div>
-        </div>
+    <!-- 快捷置顶栏 -->
+    <div class="quick-panel" id="quickPanel"></div>
+    <!-- 今日幸运星 -->
+    <div class="lucky-box ripple-btn" id="luckyBox" style="display: none;" onclick="goLucky()">
+     <div>
+      <div class="lucky-title">🔮 今日幸运星</div>
+      <div class="lucky-name" id="luckyName">站点名字</div>
+     </div>
+     <div class="lucky-btn">去逛逛</div>
     </div>
-
-    <!-- 设置 -->
-    <div id="page-settings" class="page">
-        <div class="container">
-            <h1 style="font-size: 22px; margin-bottom: 15px;">⚙️ 全能控制台</h1>
-            
-            <div class="settings-group">
-                <div class="settings-title">📊 数据概览</div>
-                <div class="data-ring">
-                    <div class="ring-item"><svg class="ring-svg"><circle class="ring-bg" cx="30" cy="30" r="24"></circle><circle class="ring-fill" id="ring1" cx="30" cy="30" r="24"></circle></svg><span class="ring-text" id="rate1">0%</span><span style="font-size:10px; margin-top:5px;">签到占比</span></div>
-                    <div class="ring-item"><svg class="ring-svg"><circle class="ring-bg" cx="30" cy="30" r="24"></circle><circle class="ring-fill" id="ring2" cx="30" cy="30" r="24"></circle></svg><span class="ring-text" id="rate2">0%</span><span style="font-size:10px; margin-top:5px;">试吃占比</span></div>
-                    <div class="ring-item"><svg class="ring-svg"><circle class="ring-bg" cx="30" cy="30" r="24"></circle><circle class="ring-fill" id="ring3" cx="30" cy="30" r="24"></circle></svg><span class="ring-text" id="rate3">0%</span><span style="font-size:10px; margin-top:5px;">私有占比</span></div>
-                </div>
-            </div>
-
-            <div class="settings-group">
-                <div class="settings-title">🏆 探索成就</div>
-                <div class="badges" id="badgeBox"></div>
-            </div>
-
-            <div class="settings-group">
-                <div class="settings-title">🎨 外观皮肤</div>
-                <div class="settings-item">
-                    <span>日夜模式</span>
-                    <button class="sort-btn ripple-btn" onclick="toggleDayNight()" id="themeBtn">🌙 夜间</button>
-                </div>
-                <div class="settings-item">
-                    <span>主题预设</span>
-                    <div class="theme-dots">
-                        <div class="t-dot t-blue active" onclick="setTheme('blue')"></div>
-                        <div class="t-dot t-pink" onclick="setTheme('pink')"></div>
-                        <div class="t-dot t-green" onclick="setTheme('green')"></div>
-                        <div class="t-dot t-dark" onclick="setTheme('dark')"></div>
-                    </div>
-                </div>
-                <div class="settings-item">
-                    <span>自定义壁纸</span>
-                    <button class="upload-btn ripple-btn">上传 <input type="file" accept="image/*" onchange="uploadBg(event)"></button>
-                </div>
-            </div>
-
-            <div class="settings-group">
-                <div class="settings-title">🎵 沉浸体验</div>
-                <div class="settings-item">
-                    <span>助眠白噪音</span>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="audio-viz" id="audioViz"><div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div></div>
-                        <button class="sort-btn ripple-btn" onclick="toggleAudio()" id="audioBtn">▶️ 播放</button>
-                    </div>
-                    <audio id="bgAudio" loop><source src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_85e6f7d8d4.mp3?filename=ocean-waves-112906.mp3" type="audio/mpeg"></audio>
-                </div>
-                <div class="settings-item" onclick="showGuide()"><span>📖 操作指南</span><span>></span></div>
-            </div>
-
-            <div class="settings-group">
-                <div class="settings-title">📢 互动中心</div>
-                <div class="settings-item" onclick="openFeedbackModal()">
-                    <span>📝 推荐新站 / 反馈</span>
-                    <span>></span>
-                </div>
-            </div>
-
-            <div class="settings-group">
-                <div class="settings-title">💾 数据安全</div>
-                <div class="settings-item" onclick="showSyncQR()">
-                    <span>📲 手机扫码迁移数据</span>
-                    <span>></span>
-                </div>
-                <div class="settings-item" onclick="openDataModal()"><span>📄 文本备份/恢复</span><span>></span></div>
-                <div class="settings-item" onclick="clearAllData()" style="color: #ef4444;"><span>🗑️ 清空所有数据</span><span>></span></div>
-            </div>
-        </div>
+    <!-- 搜索与筛选 -->
+    <div class="controls">
+     <div class="search-row">
+      <div class="search-box">
+       <span>🔍</span> <input type="text" id="searchInput" placeholder="搜索站点名称、标签或个人备注..." oninput="handleSearch(this.value)">
+       <button class="clear-btn" onclick="clearSearch()">❌</button>
+       <div class="suggest-box" id="suggestBox"></div>
+      </div>
+      <button class="sort-btn ripple-btn" onclick="cycleSort()" id="sortBtn">🔀 默认</button>
+     </div>
+     <div class="filter-scroll">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="both">✨ 双修</button>
+      <button class="filter-btn" data-filter="signin">📅 仅签到</button>
+      <button class="filter-btn" data-filter="trial">🧋 仅试吃</button>
+      <button class="filter-btn" data-filter="pendingCheckin">⏰ 待签到</button>
+      <button class="filter-btn" data-filter="hasNote">📝 有备注</button>
+      <button class="filter-btn" data-filter="fav">⭐ 仅收藏</button>
+      <button class="filter-btn" data-filter="none">👾 白板</button>
+     </div>
     </div>
-
-    <!-- 悬浮回顶 -->
-    <div class="back-top ripple-btn" id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">🚀</div>
-
-    <!-- 底部导航 -->
-    <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchPage('home', this)"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>首页</button>
-        <button class="nav-item" onclick="switchPage('fav', this)"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>星标</button>
-        <button class="nav-item" onclick="switchPage('memo', this)"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>私有</button>
-        <button class="nav-item" onclick="switchPage('notice', this)"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>通知</button>
-        <button class="nav-item" onclick="switchPage('settings', this)"><svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>设置</button>
+    <div class="grid" id="homeGrid"></div>
+   </div>
+  </div>
+  <!-- 收藏 -->
+  <div id="page-fav" class="page">
+   <div class="container">
+    <h1 style="font-size: 22px; margin-bottom: 15px;">⭐ 我的星标收藏</h1>
+    <div class="grid" id="favGrid"></div>
+   </div>
+  </div>
+  <!-- 私有备忘录 -->
+  <div id="page-memo" class="page">
+   <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+     <h1 style="font-size: 22px;">📝 私有备忘录</h1>
+     <button class="sort-btn ripple-btn" style="background: var(--accent); color: white;" onclick="openAddModal()">+ 新增</button>
     </div>
-
-    <!-- 弹窗们 -->
-    <div class="modal-overlay" id="addModal" onclick="closeModal(event, 'addModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 style="margin-bottom:15px; font-size:18px;">➕ 添加私有站点</h2>
-            <div class="form-group"><label>名称</label><input type="text" id="addName" placeholder="例如：我的专属站"></div>
-            <div class="form-group"><label>注册链接</label><input type="text" id="addUrl" placeholder="https://..."></div>
-            <div class="form-group"><label>Emoji 图标</label><input type="text" id="addEmoji" placeholder="例如：🍔" maxlength="2"></div>
-            <button class="modal-btn ripple-btn" onclick="saveCustomSite()">保存并发布</button>
-            <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'addModal')">取消</button>
-        </div>
+    <div class="search-box" style="margin-bottom: 15px;">
+     <span>🔍</span><input type="text" id="memoSearch" placeholder="搜索私有链接与备注..." oninput="renderMemoPage()">
     </div>
-
-    <div class="modal-overlay" id="dataModal" onclick="closeModal(event, 'dataModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 style="margin-bottom:15px; font-size:18px;">💾 数据备份</h2>
-            <div class="form-group"><label>导出 (复制保存)：</label><textarea id="dataTextarea" readonly style="height: 60px; font-size: 12px;"></textarea></div>
-            <button class="modal-btn ripple-btn" onclick="exportData()">📤 复制数据</button>
-            <div class="form-group" style="margin-top:15px;"><label>导入恢复：</label><textarea id="importTextarea" placeholder="粘贴恢复代码..." style="height: 60px; font-size: 12px;"></textarea></div>
-            <button class="modal-btn ripple-btn" onclick="importData()">📥 导入恢复</button>
-            <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'dataModal')">关闭</button>
-        </div>
+    <div class="grid" id="memoGrid"></div>
+   </div>
+  </div>
+  <!-- 消息通知 -->
+  <div id="page-notice" class="page">
+   <div class="container">
+    <h1 style="font-size: 22px; margin-bottom: 15px;">🔔 消息与成就动态</h1>
+    <div id="noticeList"></div>
+   </div>
+  </div>
+  <!-- 设置与控制台 -->
+  <div id="page-settings" class="page">
+   <div class="container">
+    <h1 style="font-size: 22px; margin-bottom: 15px;">⚙️ 全能控制台</h1>
+    <!-- 数据概览 -->
+    <div class="settings-group">
+     <div class="settings-title">
+      <span>📊 站点数据概览</span> <span style="font-size:11px; font-weight:normal; color:var(--text-sub);" id="dataUpdateTime">实时计算</span>
+     </div>
+     <div class="data-ring">
+      <div class="ring-item">
+       <svg class="ring-svg">
+        <circle class="ring-bg" cx="32" cy="32" r="24"></circle> <circle class="ring-fill" id="ring1" cx="32" cy="32" r="24"></circle>
+       </svg>
+       <span class="ring-text" id="rate1">0%</span> <span style="font-size:11px; margin-top:5px; font-weight:600;">签到占比</span>
+      </div>
+      <div class="ring-item">
+       <svg class="ring-svg">
+        <circle class="ring-bg" cx="32" cy="32" r="24"></circle> <circle class="ring-fill" id="ring2" cx="32" cy="32" r="24"></circle>
+       </svg>
+       <span class="ring-text" id="rate2">0%</span> <span style="font-size:11px; margin-top:5px; font-weight:600;">试吃占比</span>
+      </div>
+      <div class="ring-item">
+       <svg class="ring-svg">
+        <circle class="ring-bg" cx="32" cy="32" r="24"></circle> <circle class="ring-fill" id="ring3" cx="32" cy="32" r="24"></circle>
+       </svg>
+       <span class="ring-text" id="rate3">0%</span> <span style="font-size:11px; margin-top:5px; font-weight:600;">私有占比</span>
+      </div>
+     </div>
+     <!-- 详细数据卡片 -->
+     <div class="stat-grid" id="statCards">
+      <div class="stat-card">
+       <div class="stat-num" id="statTotal">0</div>
+       <div class="stat-label">总计收录</div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-num" id="statFavs">0</div>
+       <div class="stat-label">星标收藏</div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-num" id="statNotes">0</div>
+       <div class="stat-label">专属备注</div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-num" id="statCheckin">0%</div>
+       <div class="stat-label">今日签到</div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-num" id="statClicks">0</div>
+       <div class="stat-label">累计访问</div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-num" id="statPinned">0</div>
+       <div class="stat-label">顶部常驻</div>
+      </div>
+     </div>
     </div>
-
-    <div class="modal-overlay" id="qrModal" onclick="closeModal(event, 'qrModal')">
-        <div class="modal-box" onclick="event.stopPropagation()" style="width:260px;">
-            <h2 style="margin-bottom:10px; font-size:16px;">📲 扫码迁移数据</h2>
-            <img id="qrImage" src="" alt="QR" style="width:200px; height:200px; border-radius:12px; margin-bottom:10px;">
-            <p style="font-size:12px; color:var(--text-sub); margin-bottom:15px;">用另一台手机扫此码即可同步数据</p>
-            <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'qrModal')">关闭</button>
-        </div>
+    <!-- 成就 -->
+    <div class="settings-group">
+     <div class="settings-title">🏆 探索成就勋章</div>
+     <div class="badges" id="badgeBox"></div>
     </div>
-
-    <div class="modal-overlay" id="guideModal" onclick="closeModal(event, 'guideModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 style="margin-bottom:15px; font-size:18px;">📖 操作指南</h2>
-            <div style="font-size: 13px; text-align: left; line-height: 1.6; color: var(--text-main); margin-bottom: 10px;">
-                1. <b>极客面板</b>：卡片内可直接复制 API 和 QQ 群。<br><br>
-                2. <b>固定到桌面</b>：点击卡片右上角的 📌 按钮，该站点会固定到首页顶部。<br><br>
-                3. <b>私有数据</b>：去底部【私有】页面添加，数据存在你手机里，绝对安全。<br><br>
-                4. <b>数据防丢</b>：在【设置】页面导出代码或生成二维码，换手机即可恢复。
-            </div>
-            <button class="modal-btn ripple-btn" onclick="closeModal(null, 'guideModal')">我知道了</button>
-        </div>
+    <!-- 外观皮肤 -->
+    <div class="settings-group">
+     <div class="settings-title">🎨 外观皮肤与个性化</div>
+     <div class="settings-item">
+      <span>日夜模式</span>
+      <button class="sort-btn ripple-btn" onclick="toggleDayNight()" id="themeBtn">🌙 夜间</button>
+     </div>
+     <div class="settings-item">
+      <span>主题预设</span>
+      <div class="theme-dots">
+       <div class="t-dot t-blue active" onclick="setTheme('blue')"></div>
+       <div class="t-dot t-pink" onclick="setTheme('pink')"></div>
+       <div class="t-dot t-green" onclick="setTheme('green')"></div>
+       <div class="t-dot t-dark" onclick="setTheme('dark')"></div>
+      </div>
+     </div>
+     <div class="settings-item">
+      <span>自定义壁纸</span>
+      <div style="display:flex; gap:6px;">
+       <button class="upload-btn ripple-btn">上传 <input type="file" accept="image/*" onchange="uploadBg(event)"></button>
+       <button class="sort-btn ripple-btn" style="padding:6px 10px; font-size:12px;" onclick="clearBg()">重置</button>
+      </div>
+     </div>
     </div>
-
-    <div id="toast">提示</div>
-
-    <script>
-        // ================= 终极数据源 =================
+    <!-- 沉浸与工具 -->
+    <div class="settings-group">
+     <div class="settings-title">🎵 沉浸体验与实用工具</div>
+     <div class="settings-item">
+      <span>助眠白噪音</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+       <div class="audio-viz" id="audioViz">
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+        <div class="audio-bar"></div>
+       </div>
+       <button class="sort-btn ripple-btn" onclick="toggleAudio()" id="audioBtn">▶️ 播放</button>
+      </div>
+      <audio id="bgAudio" loop>
+       <source src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_85e6f7d8d4.mp3?filename=ocean-waves-112906.mp3" type="audio/mpeg">
+      </audio>
+     </div>
+     <div class="settings-item" onclick="openAllPendingCheckins()">
+      <span>🚀 批量打开待签到站点</span> <span>&gt;</span>
+     </div>
+     <div class="settings-item" onclick="exportNotesToClipboard()">
+      <span>📋 快速导出所有个人备注</span> <span>&gt;</span>
+     </div>
+     <div class="settings-item" onclick="showGuide()">
+      <span>📖 操作指南与技巧</span><span>&gt;</span>
+     </div>
+    </div>
+    <!-- 互动中心 -->
+    <div class="settings-group">
+     <div class="settings-title">📢 推荐与反馈</div>
+     <div class="settings-item" onclick="openFeedbackModal()">
+      <span>📝 推荐新站 / 提交反馈</span> <span>&gt;</span>
+     </div>
+    </div>
+    <!-- 数据安全 -->
+    <div class="settings-group">
+     <div class="settings-title">💾 数据安全与多端同步</div>
+     <div class="settings-item" onclick="showSyncQR()">
+      <span>📲 手机扫码同步数据 (含备注)</span> <span>&gt;</span>
+     </div>
+     <div class="settings-item" onclick="openDataModal()">
+      <span>📄 完整备份 / 恢复 (JSON)</span><span>&gt;</span>
+     </div>
+     <div class="settings-item" onclick="clearAllData()" style="color: #ef4444;">
+      <span>🗑️ 清空所有本地数据</span><span>&gt;</span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- 悬浮回顶 -->
+  <div class="back-top ripple-btn" id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">🚀</div>
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+   <button class="nav-item active" onclick="switchPage('home', this)">
+    <svg viewBox="0 0 24 24">
+     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </svg>
+    首页
+   </button>
+   <button class="nav-item" onclick="switchPage('fav', this)">
+    <svg viewBox="0 0 24 24">
+     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </svg>
+    星标
+   </button>
+   <button class="nav-item" onclick="switchPage('memo', this)">
+    <svg viewBox="0 0 24 24">
+     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+    </svg>
+    私有
+   </button>
+   <button class="nav-item" onclick="switchPage('notice', this)">
+    <svg viewBox="0 0 24 24">
+     <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+    </svg>
+    通知
+   </button>
+   <button class="nav-item" onclick="switchPage('settings', this)">
+    <svg viewBox="0 0 24 24">
+     <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+    </svg>
+    设置
+   </button>
+  </div>
+  <!-- ================= 弹窗们 ================= -->
+  <!-- 新增私有站点弹窗 -->
+  <div class="modal-overlay" id="addModal" onclick="closeModal(event, 'addModal')">
+   <div class="modal-box" onclick="event.stopPropagation()">
+    <h2 style="margin-bottom:15px; font-size:18px;">➕ 添加私有站点</h2>
+    <div class="form-group">
+     <label>站点名称 *</label><input type="text" id="addName" placeholder="例如：我的专属中转站">
+    </div>
+    <div class="form-group">
+     <label>注册/访问链接 *</label><input type="text" id="addUrl" placeholder="https://...">
+    </div>
+    <div class="form-group">
+     <label>API 地址 (选填)</label><input type="text" id="addApi" placeholder="https://.../v1">
+    </div>
+    <div class="form-group">
+     <label>QQ交流群 (选填)</label><input type="text" id="addQq" placeholder="群号">
+    </div>
+    <div class="form-group">
+     <label>Emoji 图标</label><input type="text" id="addEmoji" placeholder="例如：🍔" maxlength="2">
+    </div>
+    <div class="form-group">
+     <label>私有备注 (仅自己可见)</label><input type="text" id="addNote" placeholder="例如：初始额度$5，账号abc...">
+    </div>
+    <button class="modal-btn ripple-btn" onclick="saveCustomSite()">保存并发布</button>
+    <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'addModal')">取消</button>
+   </div>
+  </div>
+  <!-- 数据备份与恢复弹窗 -->
+  <div class="modal-overlay" id="dataModal" onclick="closeModal(event, 'dataModal')">
+   <div class="modal-box" onclick="event.stopPropagation()">
+    <h2 style="margin-bottom:12px; font-size:18px;">💾 完整数据备份与恢复</h2>
+    <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px; text-align:left;">备份内容包含：星标收藏、私有链接、所有卡片私密备注、打卡记录与常驻设置。</p>
+    <div class="form-group">
+     <label>导出备份代码：</label> <textarea id="dataTextarea" readonly style="height: 65px; font-size: 11px; font-family: monospace;"></textarea>
+    </div>
+    <div style="display:flex; gap:8px;">
+     <button class="modal-btn ripple-btn" onclick="exportData()">📤 复制数据</button>
+     <button class="modal-btn ripple-btn" style="background:#10b981;" onclick="downloadDataFile()">📥 下载文件</button>
+    </div>
+    <div class="form-group" style="margin-top:14px;">
+     <label>导入恢复代码：</label> <textarea id="importTextarea" placeholder="在此粘贴导出的备份 JSON 代码..." style="height: 65px; font-size: 11px; font-family: monospace;"></textarea>
+    </div>
+    <button class="modal-btn ripple-btn" onclick="importData()">📥 导入恢复</button>
+    <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'dataModal')">关闭</button>
+   </div>
+  </div>
+  <!-- 扫码同步弹窗 -->
+  <div class="modal-overlay" id="qrModal" onclick="closeModal(event, 'qrModal')">
+   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:320px;">
+    <h2 style="margin-bottom:8px; font-size:17px;">📲 扫码跨端迁移数据</h2>
+    <p style="font-size:11px; color:var(--text-sub); margin-bottom:12px;">用微信、浏览器或另一台手机扫码，或复制同步口令直接导入。</p>
+    <div style="background:#fff; padding:10px; border-radius:12px; display:inline-block; margin-bottom:10px;">
+     <img id="qrImage" src="" alt="二维码加载中..." style="width:200px; height:200px; display:block;">
+    </div>
+    <button class="modal-btn ripple-btn" style="background:var(--accent); font-size:13px;" onclick="copySyncToken()">📋 复制一键同步口令</button>
+    <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'qrModal')">关闭</button>
+   </div>
+  </div>
+  <!-- 操作指南弹窗 -->
+  <div class="modal-overlay" id="guideModal" onclick="closeModal(event, 'guideModal')">
+   <div class="modal-box" onclick="event.stopPropagation()">
+    <h2 style="margin-bottom:15px; font-size:18px;">📖 操作指南与超实用技巧</h2>
+    <div style="font-size: 13px; text-align: left; line-height: 1.6; color: var(--text-main); margin-bottom: 12px;">
+     1. <b>个人专属备注</b>：在卡片下方的备注栏输入账号、Token 或签到要求，自动本地保存，仅自己可见；点击 👁️ 可开启隐私防窥遮罩。
+     <br>
+     <br>
+     2. <b>每日签到打卡</b>：签到类站点带有打卡按钮，每天打卡一目了然，顶部进度条实时更新，支持「⏰ 待签到」极速筛选。
+     <br>
+     <br>
+     3. <b>客户端接入代码</b>：点击 API 旁的【配置】按钮，即可查看 OpenAI / Cherry Studio / NextChat 等客户端对应格式。
+     <br>
+     <br>
+     4. <b>极速连通测速</b>：点击【测速】按钮即可实时检测该 API 在当前网络下的延迟情况。
+     <br>
+     <br>
+     5. <b>多端备份防丢</b>：在【设置】中导出备份或手机扫码，即可一秒同步到新手机或平板。
+    </div>
+    <button class="modal-btn ripple-btn" onclick="closeModal(null, 'guideModal')">我知道了</button>
+   </div>
+  </div>
+  <!-- 客户端配置生成器弹窗 -->
+  <div class="modal-overlay" id="configModal" onclick="closeModal(event, 'configModal')">
+   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:380px;">
+    <h2 style="margin-bottom:8px; font-size:18px;">⚡ 客户端接入配置</h2>
+    <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;" id="configSiteTitle">适配各大 AI 客户端</p>
+    <div class="form-group">
+     <label>接口基础地址 (Base URL):</label>
+     <div style="display:flex; gap:6px;">
+      <input type="text" id="configBaseUrl" readonly style="font-family:monospace; font-size:12px;">
+      <button class="data-copy" onclick="copyConfigField('configBaseUrl')">复制</button>
+     </div>
+    </div>
+    <div class="form-group">
+     <label>Chat Completions 终结点:</label>
+     <div style="display:flex; gap:6px;">
+      <input type="text" id="configChatUrl" readonly style="font-family:monospace; font-size:12px;">
+      <button class="data-copy" onclick="copyConfigField('configChatUrl')">复制</button>
+     </div>
+    </div>
+    <div class="form-group">
+     <label>常用通用模型推荐:</label>
+     <div style="font-size:11px; color:var(--text-sub); background:var(--bg-main); padding:8px; border-radius:8px; line-height:1.6; text-align:left;">
+      • <code>claude-3-5-sonnet-20241022</code>
+      <br>
+      • <code>gpt-4o</code> / <code>gpt-4o-mini</code>
+      <br>
+      • <code>deepseek-chat</code> / <code>deepseek-reasoner</code>
+     </div>
+    </div>
+    <div class="form-group">
+     <label>cURL 快速测试命令:</label>
+     <div class="code-block" id="curlCodeBlock"></div>
+     <button class="modal-btn ripple-btn" style="padding:7px; font-size:12px; margin-top:5px;" onclick="copyCurlSnippet()">📋 复制测试命令</button>
+    </div>
+    <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'configModal')">关闭</button>
+   </div>
+  </div>
+  <!-- 推荐新站 / 反馈弹窗 -->
+  <div class="modal-overlay" id="feedbackModal" onclick="closeModal(event, 'feedbackModal')">
+   <div class="modal-box" onclick="event.stopPropagation()">
+    <h2 style="margin-bottom:12px; font-size:18px;">📝 推荐新站 / 提交反馈</h2>
+    <div class="form-group">
+     <label>站点名称 *</label><input type="text" id="fbName" placeholder="例如：新发现的优质中转站">
+    </div>
+    <div class="form-group">
+     <label>注册链接 / 官网 *</label><input type="text" id="fbUrl" placeholder="https://...">
+    </div>
+    <div class="form-group">
+     <label>API 地址 (选填)</label><input type="text" id="fbApi" placeholder="https://.../v1">
+    </div>
+    <div class="form-group">
+     <label>QQ交流群 (选填)</label><input type="text" id="fbQq" placeholder="QQ群号">
+    </div>
+    <div class="form-group">
+     <label>福利特色与说明</label> <textarea id="fbDesc" placeholder="例如：注册送$5试吃，每日签到送0.5，支持Claude3.5..." style="height:60px;"></textarea>
+    </div>
+    <button class="modal-btn ripple-btn" onclick="submitFeedback()">🚀 复制推荐信息并保存</button>
+    <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'feedbackModal')">取消</button>
+   </div>
+  </div>
+  <!-- 自定义确认弹窗 (解决Canvas禁用原生confirm问题) -->
+  <div class="modal-overlay" id="confirmModal" onclick="closeModal(event, 'confirmModal')">
+   <div class="modal-box" onclick="event.stopPropagation()" style="max-width:300px;">
+    <h3 style="margin-bottom:8px; font-size:16px;" id="confirmTitle">确认操作</h3>
+    <p style="font-size:13px; color:var(--text-sub); margin-bottom:15px; line-height:1.5;" id="confirmMessage">确定执行此操作吗？</p>
+    <div class="modal-actions">
+     <button class="modal-btn outline ripple-btn" onclick="closeModal(null, 'confirmModal')">取消</button>
+     <button class="modal-btn danger ripple-btn" id="confirmOkBtn">确定</button>
+    </div>
+   </div>
+  </div>
+  <div id="toast">提示</div>
+  <script>
+        // ================= 终极数据源 (新增酒栈与狸猫，共29个默认站点) =================
         const defaultData = [
-            { name: "聚梦", emoji: "💭", tags: ["签到", "试吃1"], regUrl: "https://api.jumengai.net/sign-up?aff=39ji", apiUrl: "https://api.jumengai.net/v1", qq: "1125363938" },
-            { name: "哈基米", emoji: "🐈", tags: ["签到", "试吃1"], regUrl: "https://api.gemai.cc/sign-up?aff=NQdb", apiUrl: "https://api.gemapi.ai/v1", qq: "1079097222" },
-            { name: "玖时", emoji: "⏳", tags: ["签到", "试吃1"], regUrl: "https://api.jiushi.xin/register?aff=4rQK", apiUrl: "https://api.jiushi.xin/v1", qq: "729636167" },
-            { name: "宅恋", emoji: "🏡", tags: ["签到", "试吃1"], regUrl: "https://az.zlapi.vip/register?aff=7DZ6", apiUrl: "https://az.zlapi.vip/v1", qq: "1031768941" },
-            { name: "橘子汽水", emoji: "🍹", tags: ["签到", "试吃0.5"], regUrl: "https://juziqishui.net/register?aff=ZdKQ", apiUrl: "https://juziqishui.net/v1", qq: "1106525085" },
-            { name: "大肘子", emoji: "🍗", tags: ["签到", "试吃1"], regUrl: "https://api.dzzi.ai/sign-up?aff=4e6a", apiUrl: "https://api.dzzi.ai/v1", qq: "1108769563" },
-            { name: "织云", emoji: "🧶", tags: ["签到", "试吃2"], regUrl: "https://zhiyunapi.cc/register?aff=PfJu", apiUrl: "https://zhiyunapi.cc/v1", qq: "1106614963" },
-            { name: "茉莉冰茶", emoji: "🧊", tags: ["签到", "试吃1"], regUrl: "https://a.molibingcha.xyz/sign-up?aff=01ON", apiUrl: "https://www.molytea.ccwu.cc/ai-relay/v1", qq: "1130677875" },
-            { name: "星芽", emoji: "🌱", tags: ["签到", "试吃"], regUrl: "https://xingya.site/sign-up?aff=GNjD", apiUrl: "https://xingya.site/v1", qq: "906445439" },
-            { name: "晨辰", emoji: "🌟", tags: ["签到(有门槛)", "试吃2"], regUrl: "https://api1.apistar.com.cn/sign-up?aff=8U1E", apiUrl: "https://api1.apistar.com.cn/v1", qq: "616130403" },
-            { name: "刺猬", emoji: "🦔", tags: ["签到(有门槛)", "试吃"], regUrl: "https://cc.cwapi.vip/sign-up?aff=D4Ga", apiUrl: "https://cc.cwapi.vip/v1", qq: "578721225" },
-            { name: "舒芙蕾", emoji: "🧁", tags: ["签到"], regUrl: "https://shufulei.net/register?aff=aJ2T", apiUrl: "https://shufulei.net/v1", qq: "733651536" },
-            { name: "青屿", emoji: "🏝️", tags: ["签到"], regUrl: "https://qingyuapi.com/sign-up?aff=jAge", apiUrl: "https://qingyuapi.com/v1", qq: "1093759222" },
-            { name: "小鸡农场", emoji: "🐥", tags: ["试吃0.5"], regUrl: "http://ckffai.com/sign-up?aff=hWQl", apiUrl: "https://api.68886868.xyz/v1", qq: "1109220526" },
-            { name: "甜橙派", emoji: "🍊", tags: ["试吃1"], regUrl: "https://i.orangepie.org/sign-up?aff=8q2J", apiUrl: "https://i.orangepie.org/v1", qq: "1051325141" },
-            { name: "千岛", emoji: "🗻", tags: ["试吃0.5"], regUrl: "https://api2.qiandao.mom/sign-up?aff=7F41", apiUrl: "https://api2.qiandao.mom/v1", qq: "1059982906" },
-            { name: "ekan8", emoji: "🎱", tags: ["试吃1"], regUrl: "https://api.ekanw.com/sign-up?aff=GEmK", apiUrl: "https://api.ekanw.com/v1", qq: "1073869915" },
-            { name: "芙卡卡", emoji: "🌊", tags: ["试吃4.5"], regUrl: "https://api.fuka.win/sign-up?aff=VrxE", apiUrl: "https://api.fuka.win/v1", qq: "1087340211" },
-            { name: "电子蝴蝶", emoji: "🦋", tags: ["试吃1"], regUrl: "https://api.ebutterfly.cc/sign-up?aff=cfdg", apiUrl: "https://api.ebutterfly.cc/v1", qq: "1055643662" },
-            { name: "阿拉丁", emoji: "🪄", tags: ["试吃2"], regUrl: "https://www.aladingapi.com/sign-up?aff=B7xE", apiUrl: "https://www.aladingapi.com/v1", qq: "1104684695" },
-            { name: "月栖", emoji: "🌙", tags: ["试吃1.5"], regUrl: "https://yueqiai.top/sign-up?aff=Rm7z", apiUrl: "https://yueqiai.top/v1", qq: "991569042" },
-            { name: "sora", emoji: "🕊️", tags: ["试吃1.5"], regUrl: "https://api2.usora.net/sign-up?aff=txXH", apiUrl: "https://api.usora.net/v1", qq: "776237704" },
-            { name: "启明星", emoji: "🌠", tags: ["试吃1"], regUrl: "https://api.qimingx.net/sign-up?aff=9hrb", apiUrl: "https://api.qimingx.net/v1", qq: "1128170255" },
-            { name: "星河", emoji: "🌌", tags: ["试吃2"], regUrl: "https://ai.xingheai.cc/sign-up?aff=5tCd", apiUrl: "https://api1.apistar.com.cn/v1", qq: "616130403" },
-            { name: "16z", emoji: "👾", tags: [], regUrl: "https://api16z.com/sign-up?aff=ZGAK", apiUrl: "https://api16z.com/v1", qq: "1094945327" },
-            { name: "空悲切", emoji: "🌪️", tags: ["试吃1"], regUrl: "https://api.kbq.de5.net/sign-up?aff=8ifb", apiUrl: "https://api.blanka.cc/v1", qq: "1048834379" },
-            { name: "好梦", emoji: "💤", tags: ["签到(需消费)"], regUrl: "http://156.239.242.246:3000/register?aff=4fYc", apiUrl: "http://154.40.43.160:3000/v1", qq: "551048304" }
+            {
+                name: "酒栈",
+                emoji: "🍶",
+                tags: ["签到(需10次)", "试吃2"],
+                regUrl: "https://api.jiuzhan.top/sign-up?aff=1qjO",
+                apiUrl: "https://api.jiuzhan.top",
+                qq: "1071566452"
+            },
+            {
+                name: "狸猫",
+                emoji: "🐾",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://limao-api.com/sign-up?aff=6l8X",
+                apiUrl: "https://limao-api.com/v1",
+                qq: "1128305622"
+            },
+            {
+                name: "聚梦",
+                emoji: "💭",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://api.jumengai.net/sign-up?aff=39ji",
+                apiUrl: "https://api.jumengai.net/v1",
+                qq: "1125363938"
+            },
+            {
+                name: "哈基米",
+                emoji: "🐈",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://api.gemai.cc/sign-up?aff=NQdb",
+                apiUrl: "https://api.gemapi.ai/v1",
+                qq: "1079097222"
+            },
+            {
+                name: "玖时",
+                emoji: "⏳",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://api.jiushi.xin/register?aff=4rQK",
+                apiUrl: "https://api.jiushi.xin/v1",
+                qq: "729636167"
+            },
+            {
+                name: "宅恋",
+                emoji: "🏡",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://az.zlapi.vip/register?aff=7DZ6",
+                apiUrl: "https://az.zlapi.vip/v1",
+                qq: "1031768941"
+            },
+            {
+                name: "橘子汽水",
+                emoji: "🍹",
+                tags: ["签到", "试吃0.5"],
+                regUrl: "https://juziqishui.net/register?aff=ZdKQ",
+                apiUrl: "https://juziqishui.net/v1",
+                qq: "1106525085"
+            },
+            {
+                name: "大肘子",
+                emoji: "🍗",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://api.dzzi.ai/sign-up?aff=4e6a",
+                apiUrl: "https://api.dzzi.ai/v1",
+                qq: "1108769563"
+            },
+            {
+                name: "织云",
+                emoji: "🧶",
+                tags: ["签到", "试吃2"],
+                regUrl: "https://zhiyunapi.cc/register?aff=PfJu",
+                apiUrl: "https://zhiyunapi.cc/v1",
+                qq: "1106614963"
+            },
+            {
+                name: "茉莉冰茶",
+                emoji: "🧊",
+                tags: ["签到", "试吃1"],
+                regUrl: "https://a.molibingcha.xyz/sign-up?aff=01ON",
+                apiUrl: "https://www.molytea.ccwu.cc/ai-relay/v1",
+                qq: "1130677875"
+            },
+            {
+                name: "星芽",
+                emoji: "🌱",
+                tags: ["签到", "试吃"],
+                regUrl: "https://xingya.site/sign-up?aff=GNjD",
+                apiUrl: "https://xingya.site/v1",
+                qq: "906445439"
+            },
+            {
+                name: "晨辰",
+                emoji: "🌟",
+                tags: ["签到(有门槛)", "试吃2"],
+                regUrl: "https://api1.apistar.com.cn/sign-up?aff=8U1E",
+                apiUrl: "https://api1.apistar.com.cn/v1",
+                qq: "616130403"
+            },
+            {
+                name: "刺猬",
+                emoji: "🦔",
+                tags: ["签到(有门槛)", "试吃"],
+                regUrl: "https://cc.cwapi.vip/sign-up?aff=D4Ga",
+                apiUrl: "https://cc.cwapi.vip/v1",
+                qq: "578721225"
+            },
+            {
+                name: "舒芙蕾",
+                emoji: "🧁",
+                tags: ["签到"],
+                regUrl: "https://shufulei.net/register?aff=aJ2T",
+                apiUrl: "https://shufulei.net/v1",
+                qq: "733651536"
+            },
+            {
+                name: "青屿",
+                emoji: "🏝️",
+                tags: ["签到"],
+                regUrl: "https://qingyuapi.com/sign-up?aff=jAge",
+                apiUrl: "https://qingyuapi.com/v1",
+                qq: "1093759222"
+            },
+            {
+                name: "小鸡农场",
+                emoji: "🐥",
+                tags: ["试吃0.5"],
+                regUrl: "http://ckffai.com/sign-up?aff=hWQl",
+                apiUrl: "https://api.68886868.xyz/v1",
+                qq: "1109220526"
+            },
+            {
+                name: "甜橙派",
+                emoji: "🍊",
+                tags: ["试吃1"],
+                regUrl: "https://i.orangepie.org/sign-up?aff=8q2J",
+                apiUrl: "https://i.orangepie.org/v1",
+                qq: "1051325141"
+            },
+            {
+                name: "千岛",
+                emoji: "🗻",
+                tags: ["试吃0.5"],
+                regUrl: "https://api2.qiandao.mom/sign-up?aff=7F41",
+                apiUrl: "https://api2.qiandao.mom/v1",
+                qq: "1059982906"
+            },
+            {
+                name: "ekan8",
+                emoji: "🎱",
+                tags: ["试吃1"],
+                regUrl: "https://api.ekanw.com/sign-up?aff=GEmK",
+                apiUrl: "https://api.ekanw.com/v1",
+                qq: "1073869915"
+            },
+            {
+                name: "芙卡卡",
+                emoji: "🌊",
+                tags: ["试吃4.5"],
+                regUrl: "https://api.fuka.win/sign-up?aff=VrxE",
+                apiUrl: "https://api.fuka.win/v1",
+                qq: "1087340211"
+            },
+            {
+                name: "电子蝴蝶",
+                emoji: "🦋",
+                tags: ["试吃1"],
+                regUrl: "https://api.ebutterfly.cc/sign-up?aff=cfdg",
+                apiUrl: "https://api.ebutterfly.cc/v1",
+                qq: "1055643662"
+            },
+            {
+                name: "阿拉丁",
+                emoji: "🪄",
+                tags: ["试吃2"],
+                regUrl: "https://www.aladingapi.com/sign-up?aff=B7xE",
+                apiUrl: "https://www.aladingapi.com/v1",
+                qq: "1104684695"
+            },
+            {
+                name: "月栖",
+                emoji: "🌙",
+                tags: ["试吃1.5"],
+                regUrl: "https://yueqiai.top/sign-up?aff=Rm7z",
+                apiUrl: "https://yueqiai.top/v1",
+                qq: "991569042"
+            },
+            {
+                name: "sora",
+                emoji: "🕊️",
+                tags: ["试吃1.5"],
+                regUrl: "https://api2.usora.net/sign-up?aff=txXH",
+                apiUrl: "https://api.usora.net/v1",
+                qq: "776237704"
+            },
+            {
+                name: "启明星",
+                emoji: "🌠",
+                tags: ["试吃1"],
+                regUrl: "https://api.qimingx.net/sign-up?aff=9hrb",
+                apiUrl: "https://api.qimingx.net/v1",
+                qq: "1128170255"
+            },
+            {
+                name: "星河",
+                emoji: "🌌",
+                tags: ["试吃2"],
+                regUrl: "https://ai.xingheai.cc/sign-up?aff=5tCd",
+                apiUrl: "https://api1.apistar.com.cn/v1",
+                qq: "616130403"
+            },
+            {
+                name: "16z",
+                emoji: "👾",
+                tags: [],
+                regUrl: "https://api16z.com/sign-up?aff=ZGAK",
+                apiUrl: "https://api16z.com/v1",
+                qq: "1094945327"
+            },
+            {
+                name: "空悲切",
+                emoji: "🌪️",
+                tags: ["试吃1"],
+                regUrl: "https://api.kbq.de5.net/sign-up?aff=8ifb",
+                apiUrl: "https://api.blanka.cc/v1",
+                qq: "1048834379"
+            },
+            {
+                name: "好梦",
+                emoji: "💤",
+                tags: ["签到(需消费)"],
+                regUrl: "http://156.239.242.246:3000/register?aff=4fYc",
+                apiUrl: "http://154.40.43.160:3000/v1",
+                qq: "551048304"
+            }
         ];
 
-        let customData = JSON.parse(localStorage.getItem('cl_custom')) || [];
-        let favorites = JSON.parse(localStorage.getItem('cl_favs')) || [];
-        let pinnedSites = JSON.parse(localStorage.getItem('cl_pinned')) || [];
-        let notices = JSON.parse(localStorage.getItem('cl_notices')) || [];
+        // 本地安全存储状态
+        function safeGetJSON(key, defaultVal) {
+            try {
+                const item = localStorage.getItem(key);
+                return item ? JSON.parse(item) : defaultVal;
+            } catch(e) {
+                return defaultVal;
+            }
+        }
+        function safeSetJSON(key, val) {
+            try {
+                localStorage.setItem(key, JSON.stringify(val));
+            } catch(e) {}
+        }
+
+        let customData = safeGetJSON('cl_custom', []);
+        let favorites = safeGetJSON('cl_favs', []);
+        let pinnedSites = safeGetJSON('cl_pinned', []);
+        let notices = safeGetJSON('cl_notices', []);
+        let siteNotes = safeGetJSON('cl_notes', {}); // 个人专属私密备注
+        let siteVisits = safeGetJSON('cl_visits', {}); // 各站点访问统计
+        let todayDateStr = new Date().toISOString().slice(0, 10);
+        let checkinRecords = safeGetJSON('cl_checkins_' + todayDateStr, {}); // 今日签到完成记录
+        let isGlobalMasked = localStorage.getItem('cl_mask_privacy') === 'true'; // 隐私模式
+
         let apiData = [...defaultData, ...customData];
-        
         let searchTerm = '', currentFilters = 'all';
         let audioPlaying = false;
-        let clickCount = parseInt(localStorage.getItem('cl_total_clicks')||'0');
-        const moods = ["✨ 愿你今天也能抽到想要的 SSR", "☕ 喝口水，休息一下再继续逛吧", "🌸 所有的快乐都在向你奔赴而来", "🚀 冲鸭！向着星辰大海！"];
+        let clickCount = parseInt(localStorage.getItem('cl_total_clicks') || '0');
+        let currentSortIndex = 0;
+        const sortModes = [
+            { key: 'default', label: '🔀 默认' },
+            { key: 'visits', label: '🔥 访问最多' },
+            { key: 'fav', label: '⭐ 优先收藏' },
+            { key: 'pending', label: '⏰ 待签优先' },
+            { key: 'hasNote', label: '📝 有备注优先' },
+            { key: 'name', label: '🔤 字母排序' }
+        ];
 
-        // 清理广告
-        setInterval(() => {
-            document.querySelectorAll('iframe[title="Netlify"], #netlify-badge, div[style*="z-index: 999999"]').forEach(ad => ad.remove());
-        }, 500);
+        const moods = [
+            "✨ 愿你今天也能抽到想要的 SSR",
+            "☕ 喝口水，休息一下再继续逛吧",
+            "🌸 所有的快乐都在向你奔赴而来",
+            "🚀 冲鸭！向着星辰大海与自由模型！",
+            "💡 发现新站点？记得在设置里推荐哦"
+        ];
 
-        // 全局 Ripple 特效
+        // 全局 Ripple 水波纹特效
         document.addEventListener('click', function(e) {
             const target = e.target.closest('.ripple-btn');
-            if(!target) return;
+            if (!target) return;
             const rect = target.getBoundingClientRect();
             const x = e.clientX - rect.left, y = e.clientY - rect.top;
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
-            ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
             const size = Math.max(rect.width, rect.height);
             ripple.style.width = ripple.style.height = size + 'px';
             target.appendChild(ripple);
             setTimeout(() => ripple.remove(), 600);
         });
 
-        function vibrate() { if (navigator.vibrate) navigator.vibrate(10); }
+        function vibrate() {
+            if (navigator.vibrate) {
+                try { navigator.vibrate(12); } catch(e) {}
+            }
+        }
 
+        // ================= 初始化与核心流程 =================
         function init() {
-            setGreeting(); setInterval(updateClock, 1000);
-            
+            setGreeting();
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // 主题恢复
             const savedTheme = localStorage.getItem('cl_theme') || 'blue';
             setTheme(savedTheme, false);
-            if(localStorage.getItem('cl_dark') === 'true') {
+            if (localStorage.getItem('cl_dark') === 'true') {
                 document.body.setAttribute('data-theme', 'dark');
-                document.getElementById('themeBtn').innerText = '☀️ 日间';
+                const themeBtn = document.getElementById('themeBtn');
+                if (themeBtn) themeBtn.innerText = '☀️ 日间';
             }
 
+            // 自定义背景
             const savedBg = localStorage.getItem('cl_bg');
-            if(savedBg) { 
-                document.getElementById('custom-bg').style.backgroundImage = `url(${savedBg})`; 
-                document.getElementById('custom-bg').style.display = 'block'; 
+            if (savedBg) {
+                const bgEl = document.getElementById('custom-bg');
+                bgEl.style.backgroundImage = `url(${savedBg})`;
+                bgEl.style.display = 'block';
             }
-            
-            pickLuckySite(); renderQuickPanel();
-            renderHomePage(); renderFavPage(); renderMemoPage(); renderNotices(); updateBadges();
+
+            // 隐私模式按钮
+            updatePrivacyBtnUI();
+
+            pickLuckySite();
+            renderQuickPanel();
+            renderHomePage();
+            renderFavPage();
+            renderMemoPage();
+            renderNotices();
+            updateBadges();
+            updateDataOverview();
+            updateCheckinBanner();
 
             window.onscroll = () => {
-                document.getElementById('backTop').classList.toggle('show', window.scrollY > 200);
-                if(window.scrollY > 50 && window.scrollY > (window.lastY||0)) document.getElementById('headerArea').classList.add('collapsed');
-                else document.getElementById('headerArea').classList.remove('collapsed');
+                const backTop = document.getElementById('backTop');
+                if (backTop) backTop.classList.toggle('show', window.scrollY > 200);
+                const headerArea = document.getElementById('headerArea');
+                if (headerArea) {
+                    if (window.scrollY > 50 && window.scrollY > (window.lastY || 0)) {
+                        headerArea.classList.add('collapsed');
+                    } else {
+                        headerArea.classList.remove('collapsed');
+                    }
+                }
                 window.lastY = window.scrollY;
             };
         }
@@ -495,311 +1060,1156 @@
             else greetEl.innerText = "🌙 深夜，长乐食堂";
             document.getElementById('mood').innerText = moods[Math.floor(Math.random() * moods.length)];
         }
-        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('zh-CN', { hour12: false }); }
 
+        function updateClock() {
+            const clockEl = document.getElementById('clock');
+            if (clockEl) {
+                clockEl.innerText = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+            }
+        }
+
+        // ================= 签到打卡系统 =================
+        function updateCheckinBanner() {
+            const signinSites = apiData.filter(s => s.tags && s.tags.some(t => t.includes('签到')));
+            const total = signinSites.length;
+            const checkedCount = signinSites.filter(s => checkinRecords[s.name]).length;
+            const percent = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
+
+            const bar = document.getElementById('checkinBar');
+            const stat = document.getElementById('checkinStat');
+            if (bar) bar.style.width = percent + '%';
+            if (stat) stat.innerText = `${checkedCount}/${total} (${percent}%)`;
+            const statCheckin = document.getElementById('statCheckin');
+            if (statCheckin) statCheckin.innerText = percent + '%';
+        }
+
+        window.toggleCheckin = function(e, name) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (checkinRecords[name]) {
+                delete checkinRecords[name];
+                showToast(`🔄 已撤销 ${name} 今日打卡`);
+            } else {
+                checkinRecords[name] = true;
+                showToast(`🎉 ${name} 今日已签到打卡！`);
+                recordClick(name);
+            }
+            safeSetJSON('cl_checkins_' + todayDateStr, checkinRecords);
+            updateCheckinBanner();
+            renderHomePage();
+            renderFavPage();
+            renderMemoPage();
+            updateDataOverview();
+        };
+
+        window.markAllCheckinDone = function() {
+            vibrate();
+            const signinSites = apiData.filter(s => s.tags && s.tags.some(t => t.includes('签到')));
+            signinSites.forEach(s => checkinRecords[s.name] = true);
+            safeSetJSON('cl_checkins_' + todayDateStr, checkinRecords);
+            updateCheckinBanner();
+            renderHomePage();
+            renderFavPage();
+            renderMemoPage();
+            updateDataOverview();
+            showToast("✨ 今日所有站点已标记完成打卡！");
+        };
+
+        window.quickFilterPending = function() {
+            vibrate();
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-filter') === 'pendingCheckin');
+            });
+            currentFilters = 'pendingCheckin';
+            renderHomePage();
+        };
+
+        window.openAllPendingCheckins = function() {
+            vibrate();
+            const pending = apiData.filter(s => s.tags && s.tags.some(t => t.includes('签到')) && !checkinRecords[s.name]);
+            if (pending.length === 0) {
+                return showToast("👏 今天的签到任务已经全部搞定啦！");
+            }
+            showConfirmModal("🚀 批量打开待签到", `检测到 ${pending.length} 个待签到站点，是否立即在新标签页中依次打开前 5 个？`, () => {
+                const batch = pending.slice(0, 5);
+                batch.forEach(s => {
+                    const url = s.regUrl || s.url;
+                    if (url) window.open(url, '_blank');
+                });
+                showToast(`已开启 ${batch.length} 个站点！`);
+            });
+        };
+
+        // ================= 个人专属私密备注系统 =================
+        window.handleNoteInput = function(siteName, textarea) {
+            const val = textarea.value;
+            siteNotes[siteName] = val;
+            safeSetJSON('cl_notes', siteNotes);
+
+            // 动态高亮标签
+            const tagEl = document.getElementById(`notetag-${sanitizeId(siteName)}`);
+            if (tagEl) {
+                tagEl.innerText = val.trim() ? '已保存' : '本地私密';
+                tagEl.style.color = val.trim() ? '#10b981' : 'var(--text-sub)';
+            }
+            updateDataOverview();
+        };
+
+        window.copyNote = function(e, siteName) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            const text = siteNotes[siteName] || '';
+            if (!text.trim()) {
+                return showToast("📝 当前还没有填写备注哦");
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`✅ 已复制 ${siteName} 的备注！`);
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        };
+
+        window.clearNote = function(e, siteName) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            showConfirmModal("清空专属备注", `确定清空站点「${siteName}」的专属备注内容吗？`, () => {
+                delete siteNotes[siteName];
+                safeSetJSON('cl_notes', siteNotes);
+                const input = document.getElementById(`note-${sanitizeId(siteName)}`);
+                if (input) input.value = '';
+                const tagEl = document.getElementById(`notetag-${sanitizeId(siteName)}`);
+                if (tagEl) {
+                    tagEl.innerText = '本地私密';
+                    tagEl.style.color = 'var(--text-sub)';
+                }
+                showToast("🗑️ 备注已清空");
+                updateDataOverview();
+            });
+        };
+
+        window.toggleNotePrivacy = function(e, siteName) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            const input = document.getElementById(`note-${sanitizeId(siteName)}`);
+            if (input) {
+                input.classList.toggle('masked');
+                showToast(input.classList.contains('masked') ? "🙈 已开启防窥遮罩" : "👁️ 备注显式显示");
+            }
+        };
+
+        window.toggleGlobalPrivacy = function() {
+            vibrate();
+            isGlobalMasked = !isGlobalMasked;
+            localStorage.setItem('cl_mask_privacy', isGlobalMasked ? 'true' : 'false');
+            updatePrivacyBtnUI();
+            document.querySelectorAll('.note-input').forEach(el => {
+                if (isGlobalMasked) el.classList.add('masked');
+                else el.classList.remove('masked');
+            });
+            showToast(isGlobalMasked ? "🙈 全局隐私模式已开启 (防窥)" : "👁️ 全局显式模式已开启");
+        };
+
+        function updatePrivacyBtnUI() {
+            const btn = document.getElementById('privacyBtn');
+            if (btn) {
+                if (isGlobalMasked) {
+                    btn.classList.add('active');
+                    btn.innerText = '🙈 隐私防窥中';
+                } else {
+                    btn.classList.remove('active');
+                    btn.innerText = '👁️ 备注显式';
+                }
+            }
+        }
+
+        window.exportNotesToClipboard = function() {
+            vibrate();
+            const entries = Object.entries(siteNotes).filter(([_, v]) => v && v.trim());
+            if (entries.length === 0) return showToast("暂无任何站点备注可导出");
+            let text = "【长乐食堂 - 我的个人站点专属备忘清单】\n";
+            entries.forEach(([site, note]) => {
+                text += `
+📌 ${site}:
+${note}
+-------------------`;
+            });
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`✅ 已复制全部 ${entries.length} 条专属备注到剪贴板！`);
+            }).catch(() => fallbackCopy(text));
+        };
+
+        // ================= 客户端配置与快速测速 =================
+        window.openConfigModal = function(e, name, apiUrl) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            const finalApi = apiUrl || 'https://api.example.com/v1';
+            const baseWithoutV1 = finalApi.replace(/\/v1\/?$/, '');
+            const chatUrl = `${finalApi.replace(/\/$/, '')}/chat/completions`;
+
+            document.getElementById('configSiteTitle').innerText = `站点：${name} (${finalApi})`;
+            document.getElementById('configBaseUrl').value = finalApi;
+            document.getElementById('configChatUrl').value = chatUrl;
+
+            const curlSnippet = `curl ${chatUrl} \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'`;
+            document.getElementById('curlCodeBlock').innerText = curlSnippet;
+            document.getElementById('configModal').classList.add('show');
+        };
+
+        window.copyConfigField = function(id) {
+            vibrate();
+            const val = document.getElementById(id).value;
+            navigator.clipboard.writeText(val).then(() => showToast("✅ 已复制配置地址！"));
+        };
+
+        window.copyCurlSnippet = function() {
+            vibrate();
+            const val = document.getElementById('curlCodeBlock').innerText;
+            navigator.clipboard.writeText(val).then(() => showToast("✅ 测试命令已复制！"));
+        };
+
+        window.pingApiLatency = function(e, apiUrl, siteName) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (!apiUrl) return showToast("❌ 该站点未配置 API 地址");
+            const btn = e.target;
+            const originalText = btn.innerText;
+            btn.innerText = "⏳ 测速中";
+            btn.disabled = true;
+
+            const startTime = performance.now();
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+            // 发起无跨域或HEAD嗅探测速
+            fetch(apiUrl, { mode: 'no-cors', cache: 'no-store', signal: controller.signal })
+                .then(() => {
+                    clearTimeout(timeoutId);
+                    const latency = Math.round(performance.now() - startTime);
+                    btn.innerText = `🟢 ${latency}ms`;
+                    btn.classList.add('green');
+                    showToast(`⚡ ${siteName} 延迟响应: ${latency}ms`);
+                })
+                .catch(err => {
+                    clearTimeout(timeoutId);
+                    const latency = Math.round(performance.now() - startTime);
+                    if (err.name === 'AbortError') {
+                        btn.innerText = "🔴 超时";
+                        showToast(`⚠️ ${siteName} API 访问超时`);
+                    } else {
+                        // 很多中转站有CORS保护，但只要TCP握手成功耗时很短就算通畅
+                        btn.innerText = `🟡 ${latency}ms`;
+                        showToast(`⚡ ${siteName} 网络通畅 (${latency}ms)`);
+                    }
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        btn.disabled = false;
+                    }, 2000);
+                });
+        };
+
+        // ================= 数据概览统计与 Bug 修复 =================
+        function updateDataOverview() {
+            const total = apiData.length;
+            if (total === 0) return;
+
+            const signinCount = apiData.filter(item => item.tags && item.tags.some(t => t.includes('签到'))).length;
+            const trialCount = apiData.filter(item => item.tags && item.tags.some(t => t.includes('试吃'))).length;
+            const customCount = customData.length;
+            const notesCount = Object.values(siteNotes).filter(v => v && v.trim()).length;
+
+            const p1 = Math.round((signinCount / total) * 100);
+            const p2 = Math.round((trialCount / total) * 100);
+            const p3 = Math.round((customCount / total) * 100);
+
+            // 更新环形进度数值
+            const rate1 = document.getElementById('rate1');
+            const rate2 = document.getElementById('rate2');
+            const rate3 = document.getElementById('rate3');
+            if (rate1) rate1.innerText = p1 + '%';
+            if (rate2) rate2.innerText = p2 + '%';
+            if (rate3) rate3.innerText = p3 + '%';
+
+            // 圆环周长 2 * PI * 24 ≈ 150.8
+            const perimeter = 150;
+            const ring1 = document.getElementById('ring1');
+            const ring2 = document.getElementById('ring2');
+            const ring3 = document.getElementById('ring3');
+            if (ring1) ring1.style.strokeDashoffset = Math.max(0, perimeter - (perimeter * p1 / 100));
+            if (ring2) ring2.style.strokeDashoffset = Math.max(0, perimeter - (perimeter * p2 / 100));
+            if (ring3) ring3.style.strokeDashoffset = Math.max(0, perimeter - (perimeter * p3 / 100));
+
+            // 更新统计卡片
+            const statTotal = document.getElementById('statTotal');
+            const statFavs = document.getElementById('statFavs');
+            const statNotes = document.getElementById('statNotes');
+            const statClicks = document.getElementById('statClicks');
+            const statPinned = document.getElementById('statPinned');
+            if (statTotal) statTotal.innerText = total;
+            if (statFavs) statFavs.innerText = favorites.length;
+            if (statNotes) statNotes.innerText = notesCount;
+            if (statClicks) statClicks.innerText = clickCount;
+            if (statPinned) statPinned.innerText = pinnedSites.length;
+        }
+
+        // ================= 排序逻辑 =================
+        window.cycleSort = function() {
+            vibrate();
+            currentSortIndex = (currentSortIndex + 1) % sortModes.length;
+            const mode = sortModes[currentSortIndex];
+            const btn = document.getElementById('sortBtn');
+            if (btn) btn.innerText = mode.label;
+            showToast(`排序方式切换为：${mode.label}`);
+            renderHomePage();
+        };
+
+        function getSortedData(list) {
+            const mode = sortModes[currentSortIndex].key;
+            const clone = [...list];
+            if (mode === 'visits') {
+                clone.sort((a, b) => (siteVisits[b.name] || 0) - (siteVisits[a.name] || 0));
+            } else if (mode === 'fav') {
+                clone.sort((a, b) => (favorites.includes(b.name) ? 1 : 0) - (favorites.includes(a.name) ? 1 : 0));
+            } else if (mode === 'pending') {
+                clone.sort((a, b) => {
+                    const aPending = (a.tags && a.tags.some(t => t.includes('签到')) && !checkinRecords[a.name]) ? 1 : 0;
+                    const bPending = (b.tags && b.tags.some(t => t.includes('签到')) && !checkinRecords[b.name]) ? 1 : 0;
+                    return bPending - aPending;
+                });
+            } else if (mode === 'hasNote') {
+                clone.sort((a, b) => {
+                    const aHas = (siteNotes[a.name] && siteNotes[a.name].trim()) ? 1 : 0;
+                    const bHas = (siteNotes[b.name] && siteNotes[b.name].trim()) ? 1 : 0;
+                    return bHas - aHas;
+                });
+            } else if (mode === 'name') {
+                clone.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+            }
+            return clone;
+        }
+
+        // ================= 置顶面板与幸运星 =================
         function renderQuickPanel() {
-            const box = document.getElementById('quickPanel'); box.innerHTML = '';
-            if(pinnedSites.length === 0) { box.style.display = 'none'; return; }
+            const box = document.getElementById('quickPanel');
+            if (!box) return;
+            box.innerHTML = '';
+            if (pinnedSites.length === 0) {
+                box.style.display = 'none';
+                return;
+            }
             box.style.display = 'flex';
             pinnedSites.forEach(name => {
                 const site = apiData.find(s => s.name === name);
-                if(site) {
+                if (site) {
                     box.innerHTML += `
-                    <div class="quick-item ripple-btn" onclick="jumpTo('${site.regUrl}')">
+                    <div class="quick-item ripple-btn" onclick="jumpTo('${site.regUrl || site.url}', '${site.name}')">
                         <button class="unpin-btn" onclick="togglePin(event, '${site.name}')">×</button>
-                        <span>${site.emoji}</span>
-                        <span>${site.name.slice(0,3)}</span>
+                        <span>${site.emoji || '🌐'}</span>
+                        <span>${site.name.slice(0,4)}</span>
                     </div>`;
                 }
             });
         }
 
         window.togglePin = function(e, name) {
-            e.preventDefault(); e.stopPropagation(); vibrate();
-            if(pinnedSites.includes(name)) { pinnedSites = pinnedSites.filter(n => n !== name); showToast("📌 已取消固定"); }
-            else { if(pinnedSites.length >= 5) return showToast("❌ 最多只能固定 5 个"); pinnedSites.push(name); showToast("📌 已固定到顶部"); }
-            localStorage.setItem('cl_pinned', JSON.stringify(pinnedSites));
-            renderQuickPanel(); renderHomePage(); updateBadges();
-        }
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (pinnedSites.includes(name)) {
+                pinnedSites = pinnedSites.filter(n => n !== name);
+                showToast("📌 已取消固定");
+            } else {
+                if (pinnedSites.length >= 6) return showToast("❌ 最多只能固定 6 个站点");
+                pinnedSites.push(name);
+                showToast("📌 已固定到顶部常用栏");
+            }
+            safeSetJSON('cl_pinned', pinnedSites);
+            renderQuickPanel();
+            renderHomePage();
+            updateBadges();
+            updateDataOverview();
+        };
 
         function pickLuckySite() {
             const today = new Date().toDateString();
-            if(localStorage.getItem('cl_lucky_date') !== today) {
+            if (localStorage.getItem('cl_lucky_date') !== today || !localStorage.getItem('cl_lucky_site')) {
                 const r = apiData[Math.floor(Math.random() * apiData.length)];
-                localStorage.setItem('cl_lucky_date', today); localStorage.setItem('cl_lucky_site', JSON.stringify(r));
+                localStorage.setItem('cl_lucky_date', today);
+                safeSetJSON('cl_lucky_site', r);
             }
-            const lucky = JSON.parse(localStorage.getItem('cl_lucky_site'));
-            if(lucky) { document.getElementById('luckyBox').style.display = 'flex'; document.getElementById('luckyName').innerText = `${lucky.emoji} ${lucky.name}`; }
+            const lucky = safeGetJSON('cl_lucky_site', null);
+            if (lucky) {
+                const luckyBox = document.getElementById('luckyBox');
+                const luckyName = document.getElementById('luckyName');
+                if (luckyBox) luckyBox.style.display = 'flex';
+                if (luckyName) luckyName.innerText = `${lucky.emoji || '✨'} ${lucky.name}`;
+            }
         }
-        window.goLucky = function() { const l = JSON.parse(localStorage.getItem('cl_lucky_site')); if(l) jumpTo(l.regUrl); }
 
+        window.goLucky = function() {
+            const l = safeGetJSON('cl_lucky_site', null);
+            if (l) jumpTo(l.regUrl || l.url, l.name);
+        };
+
+        // ================= 成就勋章系统 =================
         function updateBadges() {
-            const badgeBox = document.getElementById('badgeBox'); badgeBox.innerHTML = '';
+            const badgeBox = document.getElementById('badgeBox');
+            if (!badgeBox) return;
+            badgeBox.innerHTML = '';
+            const notesCount = Object.values(siteNotes).filter(v => v && v.trim()).length;
             const badges = [
                 { icon: '🌱', name: '初出茅庐', cond: clickCount > 0 },
                 { icon: '🔥', name: '食堂常客', cond: clickCount >= 10 },
                 { icon: '🏆', name: '寻宝达人', cond: clickCount >= 50 },
                 { icon: '⭐', name: '收藏家', cond: favorites.length >= 5 },
-                { icon: '📝', name: '记录者', cond: customData.length >= 1 },
+                { icon: '📝', name: '笔记专家', cond: notesCount >= 3 },
                 { icon: '📌', name: '航海家', cond: pinnedSites.length >= 1 },
+                { icon: '🛠️', name: '创客舵手', cond: customData.length >= 1 },
                 { icon: '👑', name: '长乐之神', cond: clickCount >= 100 }
             ];
-            badges.forEach(b => { badgeBox.innerHTML += `<div class="badge-item ${b.cond?'unlocked':''}">${b.icon} ${b.name}</div>`; });
+            badges.forEach(b => {
+                badgeBox.innerHTML += `<div class="badge-item ${b.cond ? 'unlocked' : ''}">${b.icon} ${b.name}</div>`;
+            });
         }
 
+        // ================= 页面切换 =================
         window.switchPage = function(pageId, btn) {
             vibrate();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active'); btn.classList.add('active');
-            window.scrollTo(0,0);
-            if(pageId === 'settings') { updateBadges(); }
-        }
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) targetPage.classList.add('active');
+            if (btn) btn.classList.add('active');
+            window.scrollTo(0, 0);
 
+            if (pageId === 'settings') {
+                updateBadges();
+                updateDataOverview();
+                const timeEl = document.getElementById('dataUpdateTime');
+                if (timeEl) timeEl.innerText = new Date().toLocaleTimeString();
+            }
+        };
+
+        // 筛选按钮绑定
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                vibrate(); filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-                currentFilters = btn.getAttribute('data-filter'); renderHomePage();
+                vibrate();
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilters = btn.getAttribute('data-filter');
+                renderHomePage();
             });
         });
 
-        // 核心：渲染卡片，完美融入数据面板
+        // 辅助转义 ID
+        function sanitizeId(str) {
+            return encodeURIComponent(str).replace(/%/g, '_');
+        }
+
+        // ================= 核心：卡片 HTML 渲染 =================
         function createCardHtml(item, isFav, isMemo = false) {
             let tagsHtml = '';
-            if (item.tags.length === 0) tagsHtml = `<span class="tag none">👾 白板</span>`;
-            item.tags.forEach(t => {
-                if (t.includes('签到')) tagsHtml += `<span class="tag signin">📅 ${t}</span>`;
-                if (t.includes('试吃')) tagsHtml += `<span class="tag trial">🧋 ${t}</span>`;
-            });
-            
+            const safeName = item.name.replace(/'/g, "\'");
+            const safeId = sanitizeId(item.name);
+            const isSignin = item.tags && item.tags.some(t => t.includes('签到'));
+            const isTrial = item.tags && item.tags.some(t => t.includes('试吃'));
+            const isChecked = checkinRecords[item.name];
+
+            if (!item.tags || item.tags.length === 0) {
+                tagsHtml = `<span class="tag none">👾 白板</span>`;
+            } else {
+                item.tags.forEach(t => {
+                    if (t.includes('签到')) tagsHtml += `<span class="tag signin">📅 ${t}</span>`;
+                    if (t.includes('试吃')) tagsHtml += `<span class="tag trial">🧋 ${t}</span>`;
+                });
+            }
+
+            // 打卡状态 Pill
+            let checkinBtnHtml = '';
+            if (isSignin) {
+                checkinBtnHtml = `
+                <button class="checkin-pill ${isChecked ? 'done' : ''} ripple-btn" onclick="toggleCheckin(event, '${safeName}')">
+                    ${isChecked ? '✅ 今日已签' : '⏰ 待签到'}
+                </button>`;
+            }
+
             const isCustom = customData.some(d => d.name === item.name);
             const privateBadge = isCustom ? `<span class="badge-private">🏷️私有</span>` : '';
             const isPinned = pinnedSites.includes(item.name);
-            let glowClass = item.tags.includes('签到') && item.tags.includes('试吃') ? 'glow-both' : (item.tags.includes('签到') ? 'glow-green' : (item.tags.includes('试吃') ? 'glow-pink' : ''));
-            
-            // 极客数据面板 HTML
+            const glowClass = (isSignin && isTrial) ? 'glow-both' : (isSignin ? 'glow-green' : (isTrial ? 'glow-pink' : ''));
+
+            // 极客数据面板 (API & QQ & 测速 & 客户端配置)
             let dataPanelHtml = '';
-            if(item.apiUrl || item.qq) {
-                dataPanelHtml = `<div class="data-panel">
-                    ${item.apiUrl ? `<div class="data-row" onclick="copyText(event, '${item.apiUrl}')"><span class="data-text">API: ${item.apiUrl}</span><button class="data-copy">复制</button></div>` : ''}
-                    ${item.qq ? `<div class="data-row" onclick="copyText(event, '${item.qq}')"><span class="data-text">QQ群: ${item.qq}</span><button class="data-copy">复制</button></div>` : ''}
+            if (item.apiUrl || item.qq) {
+                dataPanelHtml = `<div class="data-panel" onclick="event.stopPropagation()">
+                    ${item.apiUrl ? `
+                    <div class="data-row">
+                        <span class="data-text" title="${item.apiUrl}">API: ${item.apiUrl}</span>
+                        <div class="data-btn-group">
+                            <button class="data-copy" onclick="copyText(event, '${item.apiUrl}')">复制</button>
+                            <button class="data-copy gray" onclick="pingApiLatency(event, '${item.apiUrl}', '${safeName}')">测速</button>
+                            <button class="data-copy purple" onclick="openConfigModal(event, '${safeName}', '${item.apiUrl}')">配置</button>
+                        </div>
+                    </div>` : ''}
+                    ${item.qq ? `
+                    <div class="data-row">
+                        <span class="data-text">QQ群: ${item.qq}</span>
+                        <button class="data-copy" onclick="copyText(event, '${item.qq}')">复制群号</button>
+                    </div>` : ''}
                 </div>`;
             }
 
+            // 专属个人备注数据
+            const currentNote = siteNotes[item.name] || '';
+            const hasNote = Boolean(currentNote.trim());
+            const maskedClass = isGlobalMasked ? 'masked' : '';
+
+            // 专属备注区域
+            const noteSectionHtml = `
+            <div class="note-section" onclick="event.stopPropagation()">
+                <div class="note-header">
+                    <span class="note-label">
+                        📝 专属私密备注
+                        <span id="notetag-${safeId}" style="font-size:10px; font-weight:normal; color:${hasNote ? '#10b981' : 'var(--text-sub)'};">
+                            ${hasNote ? '已保存' : '本地私密'}
+                        </span>
+                    </span>
+                    <div class="note-actions">
+                        <button class="note-action-btn" title="一键复制备注" onclick="copyNote(event, '${safeName}')">📋 复制</button>
+                        <button class="note-action-btn" title="防窥遮罩" onclick="toggleNotePrivacy(event, '${safeName}')">👁️ 遮罩</button>
+                        <button class="note-action-btn" title="清空备注" onclick="clearNote(event, '${safeName}')">🗑️ 清空</button>
+                    </div>
+                </div>
+                <textarea 
+                    class="note-input ${maskedClass}" 
+                    id="note-${safeId}" 
+                    rows="1" 
+                    placeholder="✍️ 记录Token、账号、余额或要求（仅本地可见）..." 
+                    oninput="handleNoteInput('${safeName}', this)">${escapeHtml(currentNote)}</textarea>
+            </div>`;
+
             // 卡片主体
             let cardHtml = `
-            <div class="card ${glowClass}" onclick="jumpTo('${item.regUrl || item.url}')">
+            <div class="card ${glowClass}" onclick="jumpTo('${item.regUrl || item.url}', '${safeName}')">
                 <div class="action-group">
-                    ${!isMemo ? `<button class="action-btn ${isPinned ? 'pinned' : ''} ripple-btn" onclick="togglePin(event, '${item.name}')">📌</button>` : ''}
-                    <button class="action-btn ripple-btn" onclick="shareSite(event, '${item.name}', '${item.regUrl || item.url}')">🔗</button>
-                    ${!isMemo ? `<button class="action-btn ${isFav ? 'active' : ''} ripple-btn" onclick="toggleFav(event, '${item.name}')">${isFav ? '❤️' : '🤍'}</button>` : ''}
+                    ${!isMemo ? `<button class="action-btn ${isPinned ? 'pinned' : ''} ripple-btn" title="置顶" onclick="togglePin(event, '${safeName}')">📌</button>` : ''}
+                    <button class="action-btn ripple-btn" title="分享" onclick="shareSite(event, '${safeName}', '${item.regUrl || item.url}')">🔗</button>
+                    ${!isMemo ? `<button class="action-btn ${isFav ? 'active' : ''} ripple-btn" title="收藏" onclick="toggleFav(event, '${safeName}')">${isFav ? '❤️' : '🤍'}</button>` : ''}
                 </div>
                 <div class="card-top">
                     <div class="avatar">${item.emoji || '🌐'}</div>
-                    <div>
+                    <div class="card-title-wrap">
                         <div class="card-title">${item.name} ${privateBadge} <span class="heartbeat"></span></div>
-                        <div class="card-hint">${isMemo ? '左滑删除' : '✨ 点击探索'}</div>
+                        <div class="card-hint">
+                            <span>${isMemo ? '左滑删除' : '✨ 点击直达'}</span>
+                            ${checkinBtnHtml}
+                        </div>
                     </div>
                 </div>
                 <div class="tags">${tagsHtml}</div>
                 ${dataPanelHtml}
+                ${noteSectionHtml}
             </div>`;
 
-            if(isMemo) {
+            if (isMemo) {
                 return `
                 <div class="swipe-container">
-                    <div class="swipe-delete" onclick="deleteCustomSite(event, '${item.name}')">🗑️ 删除</div>
+                    <div class="swipe-delete" onclick="deleteCustomSite(event, '${safeName}')">🗑️ 删除</div>
                     <div class="swipe-content">${cardHtml}</div>
                 </div>`;
-            } else {
-                return cardHtml;
             }
+            return cardHtml;
         }
 
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        // ================= 渲染各页面列表 =================
         function renderHomePage() {
-            const grid = document.getElementById('homeGrid'); grid.innerHTML = '';
+            const grid = document.getElementById('homeGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
             let filtered = apiData.filter(item => {
-                if (!item.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+                const noteContent = siteNotes[item.name] || '';
+                const searchLower = searchTerm.toLowerCase();
+                const matchSearch = item.name.toLowerCase().includes(searchLower) ||
+                    (item.tags && item.tags.some(t => t.toLowerCase().includes(searchLower))) ||
+                    noteContent.toLowerCase().includes(searchLower);
+
+                if (!matchSearch) return false;
+
                 if (currentFilters === 'all') return true;
-                if (currentFilters === 'both') return item.tags.some(t => t.includes('签到')) && item.tags.some(t => t.includes('试吃'));
-                if (currentFilters === 'signin') return item.tags.some(t => t.includes('签到')) && !item.tags.some(t => t.includes('试吃'));
-                if (currentFilters === 'trial') return item.tags.some(t => t.includes('试吃')) && !item.tags.some(t => t.includes('签到'));
-                if (currentFilters === 'none') return item.tags.length === 0;
+                if (currentFilters === 'both') return item.tags && item.tags.some(t => t.includes('签到')) && item.tags.some(t => t.includes('试吃'));
+                if (currentFilters === 'signin') return item.tags && item.tags.some(t => t.includes('签到')) && !item.tags.some(t => t.includes('试吃'));
+                if (currentFilters === 'trial') return item.tags && item.tags.some(t => t.includes('试吃')) && !item.tags.some(t => t.includes('签到'));
+                if (currentFilters === 'pendingCheckin') return item.tags && item.tags.some(t => t.includes('签到')) && !checkinRecords[item.name];
+                if (currentFilters === 'hasNote') return Boolean(siteNotes[item.name] && siteNotes[item.name].trim());
+                if (currentFilters === 'fav') return favorites.includes(item.name);
+                if (currentFilters === 'none') return !item.tags || item.tags.length === 0;
                 return true;
             });
-            if (filtered.length === 0) return grid.innerHTML = '<div class="empty-state"><div>☁️</div><p>没有找到站点哦~</p></div>';
-            filtered.forEach((item) => grid.innerHTML += createCardHtml(item, favorites.includes(item.name), false));
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div>☁️</div><p>没有找到符合条件的站点哦~</p></div>';
+                return;
+            }
+
+            const sorted = getSortedData(filtered);
+            sorted.forEach(item => {
+                grid.innerHTML += createCardHtml(item, favorites.includes(item.name), false);
+            });
         }
 
         function renderFavPage() {
-            const grid = document.getElementById('favGrid'); grid.innerHTML = '';
+            const grid = document.getElementById('favGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
             const filtered = apiData.filter(item => favorites.includes(item.name));
-            if (filtered.length === 0) return grid.innerHTML = '<div class="empty-state"><div>⭐</div><p>还没有收藏任何站点哦</p></div>';
-            filtered.forEach(item => grid.innerHTML += createCardHtml(item, true, false));
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div>⭐</div><p>还没有收藏任何站点哦，在首页点击心形即可收藏！</p></div>';
+                return;
+            }
+            const sorted = getSortedData(filtered);
+            sorted.forEach(item => {
+                grid.innerHTML += createCardHtml(item, true, false);
+            });
         }
 
         function renderMemoPage() {
-            const grid = document.getElementById('memoGrid'); grid.innerHTML = '';
-            const term = document.getElementById('memoSearch').value.toLowerCase();
-            const filtered = customData.filter(item => item.name.toLowerCase().includes(term));
-            if (filtered.length === 0) return grid.innerHTML = '<div class="empty-state"><div>📝</div><p>还没有私有链接哦</p></div>';
-            filtered.forEach(item => grid.innerHTML += createCardHtml(item, false, true));
+            const grid = document.getElementById('memoGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const term = (document.getElementById('memoSearch')?.value || '').toLowerCase();
+            const filtered = customData.filter(item => {
+                const note = (siteNotes[item.name] || '').toLowerCase();
+                return item.name.toLowerCase().includes(term) || note.includes(term);
+            });
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div>📝</div><p>还没有私有链接哦，点击右上角「+ 新增」添加你的专属中转站！</p></div>';
+                return;
+            }
+            filtered.forEach(item => {
+                grid.innerHTML += createCardHtml(item, false, true);
+            });
         }
 
         function renderNotices() {
             const box = document.getElementById('noticeList');
-            if(notices.length === 0) return box.innerHTML = '<div class="empty-state">暂无消息</div>';
+            if (!box) return;
+            if (notices.length === 0) {
+                box.innerHTML = '<div class="empty-state"><div>🔔</div><p>暂无新消息通知</p></div>';
+                return;
+            }
             box.innerHTML = '';
             notices.slice().reverse().forEach(n => {
-                box.innerHTML += `<div style="background:var(--card-bg); border-radius:12px; padding:15px; margin-bottom:10px; border:1px solid var(--border-color);">
+                box.innerHTML += `
+                <div style="background:var(--card-bg); border-radius:12px; padding:13px 15px; margin-bottom:10px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
                     <div style="font-weight:bold; font-size:14px; margin-bottom:4px; color:var(--text-main);">${n.title}</div>
-                    <div style="font-size:13px; color:var(--text-sub);">${n.desc}</div>
+                    <div style="font-size:12px; color:var(--text-sub); line-height:1.5;">${n.desc}</div>
                 </div>`;
             });
         }
+
         function addNotice(title, desc) {
             notices.push({ title, desc });
-            if(notices.length > 20) notices.shift();
-            localStorage.setItem('cl_notices', JSON.stringify(notices));
+            if (notices.length > 25) notices.shift();
+            safeSetJSON('cl_notices', notices);
             renderNotices();
         }
 
         // ================= 交互与跳转 =================
-        window.jumpTo = function(url) { 
-            if(url) { vibrate(); window.location.href = url; }
+        window.jumpTo = function(url, name) {
+            if (name) recordClick(name);
+            if (url) {
+                vibrate();
+                window.location.href = url;
+            }
         };
 
         window.copyText = function(e, text) {
-            e.preventDefault(); e.stopPropagation(); vibrate();
-            if(!text) return;
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("✅ 已复制: " + text);
-            });
+            }).catch(() => fallbackCopy(text));
         };
 
-        window.recordClick = function(name) {
-            clickCount++; localStorage.setItem('cl_total_clicks', clickCount);
-            updateBadges(); 
-            if(clickCount===10) addNotice("🏆 成就解锁", "恭喜你获得【食堂常客】徽章！");
-            if(clickCount===50) addNotice("🏆 成就解锁", "恭喜你获得【寻宝达人】徽章！");
+        function fallbackCopy(text) {
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                showToast("✅ 已成功复制！");
+            } catch(e) {
+                showToast("❌ 复制失败，请手动选择复制");
+            }
         }
+
+        window.recordClick = function(name) {
+            clickCount++;
+            localStorage.setItem('cl_total_clicks', clickCount.toString());
+            if (name) {
+                siteVisits[name] = (siteVisits[name] || 0) + 1;
+                safeSetJSON('cl_visits', siteVisits);
+            }
+            updateBadges();
+            updateDataOverview();
+
+            if (clickCount === 1) addNotice("🌱 成就解锁", "恭喜你开启探索之旅，获得【初出茅庐】徽章！");
+            if (clickCount === 10) addNotice("🔥 成就解锁", "恭喜你获得【食堂常客】徽章！");
+            if (clickCount === 50) addNotice("🏆 成就解锁", "恭喜你获得【寻宝达人】徽章！");
+            if (clickCount === 100) addNotice("👑 成就解锁", "太厉害了！获得终极【长乐之神】徽章！");
+        };
 
         window.toggleFav = function(e, name) {
-            e.preventDefault(); e.stopPropagation(); vibrate();
-            if (favorites.includes(name)) { favorites = favorites.filter(f => f !== name); showToast("💔 已取消收藏"); }
-            else { favorites.push(name); showToast("❤️ 收藏成功"); }
-            localStorage.setItem('cl_favs', JSON.stringify(favorites));
-            renderHomePage(); renderFavPage(); updateBadges();
-        }
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (favorites.includes(name)) {
+                favorites = favorites.filter(f => f !== name);
+                showToast("💔 已取消收藏");
+            } else {
+                favorites.push(name);
+                showToast("❤️ 已加入星标收藏");
+                if (favorites.length >= 5) addNotice("⭐ 成就解锁", "恭喜你收藏超过5个站点，获得【收藏家】勋章！");
+            }
+            safeSetJSON('cl_favs', favorites);
+            renderHomePage();
+            renderFavPage();
+            updateBadges();
+            updateDataOverview();
+        };
 
         window.shareSite = function(e, name, url) {
-            e.preventDefault(); e.stopPropagation(); vibrate();
-            if(!url) return;
-            if (navigator.share) navigator.share({ title: name, text: `发现一个超好用的站点：${name}`, url: url }).catch(() => {});
-            else { navigator.clipboard.writeText(url); showToast("✅ 链接已复制！"); }
-        }
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            vibrate();
+            if (!url) return;
+            if (navigator.share) {
+                navigator.share({
+                    title: name,
+                    text: `发现一个超好用的 AI API 中转与福利站：${name}`,
+                    url: url
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast("✅ 站点链接已复制到剪贴板！");
+                }).catch(() => fallbackCopy(url));
+            }
+        };
 
-        // 设置相关
+        // ================= 外观与音频 =================
         window.toggleDayNight = function() {
-            vibrate(); 
+            vibrate();
             const isDark = document.body.getAttribute('data-theme') === 'dark';
-            if(isDark) {
-                document.body.setAttribute('data-theme', localStorage.getItem('cl_theme') || 'blue');
+            if (isDark) {
+                const prev = localStorage.getItem('cl_theme') || 'blue';
+                document.body.setAttribute('data-theme', prev);
                 document.getElementById('themeBtn').innerText = '🌙 夜间';
+                localStorage.setItem('cl_dark', 'false');
             } else {
                 document.body.setAttribute('data-theme', 'dark');
                 document.getElementById('themeBtn').innerText = '☀️ 日间';
+                localStorage.setItem('cl_dark', 'true');
             }
-        }
+        };
+
         window.setTheme = function(themeName, save = true) {
-            vibrate(); document.body.setAttribute('data-theme', themeName);
-            document.getElementById('themeBtn').innerText = themeName === 'dark' ? '☀️ 日间' : '🌙 夜间';
+            vibrate();
+            document.body.setAttribute('data-theme', themeName);
+            const isDark = themeName === 'dark';
+            document.getElementById('themeBtn').innerText = isDark ? '☀️ 日间' : '🌙 夜间';
+            localStorage.setItem('cl_dark', isDark ? 'true' : 'false');
+
             document.querySelectorAll('.t-dot').forEach(dot => dot.classList.remove('active'));
-            const dot = document.querySelector(`.t-${themeName}`); if(dot) dot.classList.add('active');
-            if(save) localStorage.setItem('cl_theme', themeName);
-        }
+            const dot = document.querySelector(`.t-${themeName}`);
+            if (dot) dot.classList.add('active');
+            if (save) localStorage.setItem('cl_theme', themeName);
+        };
+
         window.uploadBg = function(e) {
-            const file = e.target.files[0]; if(!file) return;
+            const file = e.target.files[0];
+            if (!file) return;
             const reader = new FileReader();
             reader.onload = function(event) {
-                document.getElementById('custom-bg').style.backgroundImage = `url(${event.target.result})`;
-                document.getElementById('custom-bg').style.display = 'block';
-                localStorage.setItem('cl_bg', event.target.result); showToast("✅ 壁纸已更新！");
-            }
+                const bgEl = document.getElementById('custom-bg');
+                bgEl.style.backgroundImage = `url(${event.target.result})`;
+                bgEl.style.display = 'block';
+                localStorage.setItem('cl_bg', event.target.result);
+                showToast("✅ 自定义壁纸已更新！");
+            };
             reader.readAsDataURL(file);
-        }
-        window.toggleAudio = function() {
-            const audio = document.getElementById('bgAudio'); const viz = document.getElementById('audioViz'); const btn = document.getElementById('audioBtn');
-            if(audioPlaying) { audio.pause(); viz.classList.remove('playing'); btn.innerText = '▶️ 播放'; }
-            else { audio.play().catch(()=>showToast("需要点击屏幕允许播放")); viz.classList.add('playing'); btn.innerText = '⏸️ 暂停'; }
-            audioPlaying = !audioPlaying; vibrate();
-        }
-        window.showGuide = function() { vibrate(); document.getElementById('guideModal').classList.add('show'); }
+        };
 
-        // 增删私有
-        window.openAddModal = function() { vibrate(); document.getElementById('addModal').classList.add('show'); }
+        window.clearBg = function() {
+            vibrate();
+            localStorage.removeItem('cl_bg');
+            const bgEl = document.getElementById('custom-bg');
+            bgEl.style.backgroundImage = '';
+            bgEl.style.display = 'none';
+            showToast("壁纸已恢复默认风格");
+        };
+
+        window.toggleAudio = function() {
+            const audio = document.getElementById('bgAudio');
+            const viz = document.getElementById('audioViz');
+            const btn = document.getElementById('audioBtn');
+            if (audioPlaying) {
+                audio.pause();
+                viz.classList.remove('playing');
+                btn.innerText = '▶️ 播放';
+            } else {
+                audio.play().then(() => {
+                    viz.classList.add('playing');
+                    btn.innerText = '⏸️ 暂停';
+                }).catch(() => showToast("请点击页面任意处后再次播放"));
+            }
+            audioPlaying = !audioPlaying;
+            vibrate();
+        };
+
+        window.showGuide = function() {
+            vibrate();
+            document.getElementById('guideModal').classList.add('show');
+        };
+
+        // ================= 推荐新站 / 反馈 =================
+        window.openFeedbackModal = function() {
+            vibrate();
+            document.getElementById('feedbackModal').classList.add('show');
+        };
+
+        window.submitFeedback = function() {
+            vibrate();
+            const name = document.getElementById('fbName').value.trim();
+            const url = document.getElementById('fbUrl').value.trim();
+            const api = document.getElementById('fbApi').value.trim();
+            const qq = document.getElementById('fbQq').value.trim();
+            const desc = document.getElementById('fbDesc').value.trim();
+
+            if (!name || !url) return showToast("❌ 请至少填写站点名称与注册链接！");
+
+            const text = `【新站点推荐】
+• 名称：${name}
+• 注册地址：${url}
+• API：${api || '无'}
+• QQ群：${qq || '无'}
+• 说明：${desc || '无'}`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("✅ 推荐信息已复制到剪贴板！");
+            }).catch(() => fallbackCopy(text));
+
+            // 同时将该站自动加入到用户本地私有库中，方便立刻使用
+            customData.push({
+                name,
+                regUrl: url,
+                emoji: '✨',
+                tags: desc.includes('试吃') ? ['试吃'] : ['中转'],
+                apiUrl: api,
+                qq: qq
+            });
+            if (desc) siteNotes[name] = desc;
+
+            safeSetJSON('cl_custom', customData);
+            safeSetJSON('cl_notes', siteNotes);
+            apiData = [...defaultData, ...customData];
+
+            closeModal(null, 'feedbackModal');
+            renderHomePage();
+            renderMemoPage();
+            updateDataOverview();
+            addNotice("🎉 站点推荐成功", `已为您将「${name}」同步存入私有库！`);
+
+            document.getElementById('fbName').value = '';
+            document.getElementById('fbUrl').value = '';
+            document.getElementById('fbApi').value = '';
+            document.getElementById('fbQq').value = '';
+            document.getElementById('fbDesc').value = '';
+        };
+
+        // ================= 增删私有站点 =================
+        window.openAddModal = function() {
+            vibrate();
+            document.getElementById('addModal').classList.add('show');
+        };
+
         window.saveCustomSite = function() {
-            vibrate(); const name = document.getElementById('addName').value.trim(); const regUrl = document.getElementById('addUrl').value.trim();
+            vibrate();
+            const name = document.getElementById('addName').value.trim();
+            const regUrl = document.getElementById('addUrl').value.trim();
+            const api = document.getElementById('addApi').value.trim();
+            const qq = document.getElementById('addQq').value.trim();
             const emoji = document.getElementById('addEmoji').value.trim() || '🌐';
+            const note = document.getElementById('addNote').value.trim();
+
             if (!name || !regUrl) return showToast("❌ 名字和链接不能为空！");
-            customData.push({ name, regUrl, emoji, tags: [], apiUrl: '', qq: '' }); 
-            localStorage.setItem('cl_custom', JSON.stringify(customData));
-            apiData = [...defaultData, ...customData]; closeModal(null, 'addModal'); renderHomePage(); renderMemoPage(); showToast("✅ 已添加！");
-            addNotice("📝 新增私有站点", `你成功添加了站点：${name}`); updateBadges();
-            // 清空输入框
+
+            customData.push({
+                name,
+                regUrl,
+                emoji,
+                tags: ['私有'],
+                apiUrl: api,
+                qq: qq
+            });
+
+            if (note) siteNotes[name] = note;
+
+            safeSetJSON('cl_custom', customData);
+            safeSetJSON('cl_notes', siteNotes);
+            apiData = [...defaultData, ...customData];
+
+            closeModal(null, 'addModal');
+            renderHomePage();
+            renderMemoPage();
+            showToast("✅ 已成功添加私有站点！");
+            addNotice("📝 新增私有站点", `成功创建站点：${name}`);
+            updateBadges();
+            updateDataOverview();
+
             document.getElementById('addName').value = '';
             document.getElementById('addUrl').value = '';
+            document.getElementById('addApi').value = '';
+            document.getElementById('addQq').value = '';
             document.getElementById('addEmoji').value = '';
-        }
-        window.deleteCustomSite = function(event, name) {
-            event.preventDefault(); event.stopPropagation(); vibrate();
-            if(!confirm(`确定删除私有链接 "${name}" 吗？`)) return;
-            customData = customData.filter(d => d.name !== name); localStorage.setItem('cl_custom', JSON.stringify(customData));
-            apiData = [...defaultData, ...customData]; renderHomePage(); renderMemoPage(); showToast("🗑️ 已删除"); updateBadges();
-        }
+            document.getElementById('addNote').value = '';
+        };
 
-        // 备份恢复
+        window.deleteCustomSite = function(event, name) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            vibrate();
+            showConfirmModal("🗑️ 确认删除", `确定删除私有链接「${name}」吗？此操作无法撤销。`, () => {
+                customData = customData.filter(d => d.name !== name);
+                delete siteNotes[name];
+                safeSetJSON('cl_custom', customData);
+                safeSetJSON('cl_notes', siteNotes);
+                apiData = [...defaultData, ...customData];
+                renderHomePage();
+                renderMemoPage();
+                showToast("🗑️ 已删除");
+                updateBadges();
+                updateDataOverview();
+            });
+        };
+
+        // ================= 数据完整备份与恢复 (含备注) =================
         window.openDataModal = function() {
-            vibrate(); const allData = { favs: favorites, clicks: JSON.parse(localStorage.getItem('cl_clicks'))||{}, custom: customData, pinned: pinnedSites };
-            document.getElementById('dataTextarea').value = JSON.stringify(allData); document.getElementById('dataModal').classList.add('show');
-        }
-        window.exportData = function() { vibrate(); navigator.clipboard.writeText(document.getElementById('dataTextarea').value); showToast("✅ 已复制！"); }
+            vibrate();
+            const allData = {
+                favs: favorites,
+                custom: customData,
+                pinned: pinnedSites,
+                notes: siteNotes,
+                clicks: clickCount,
+                visits: siteVisits,
+                checkins: checkinRecords,
+                theme: localStorage.getItem('cl_theme') || 'blue',
+                version: "2.0"
+            };
+            document.getElementById('dataTextarea').value = JSON.stringify(allData, null, 2);
+            document.getElementById('dataModal').classList.add('show');
+        };
+
+        window.exportData = function() {
+            vibrate();
+            const text = document.getElementById('dataTextarea').value;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("✅ 完整备份已复制到剪贴板！");
+            }).catch(() => fallbackCopy(text));
+        };
+
+        window.downloadDataFile = function() {
+            vibrate();
+            const text = document.getElementById('dataTextarea').value;
+            const blob = new Blob([text], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `changle_backup_${todayDateStr}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("📥 备份文件已下载！");
+        };
+
         window.importData = function() {
-            vibrate(); try {
-                const data = JSON.parse(document.getElementById('importTextarea').value);
-                if(data.favs) localStorage.setItem('cl_favs', JSON.stringify(data.favs));
-                if(data.clicks) localStorage.setItem('cl_clicks', JSON.stringify(data.clicks));
-                if(data.custom) localStorage.setItem('cl_custom', JSON.stringify(data.custom));
-                if(data.pinned) localStorage.setItem('cl_pinned', JSON.stringify(data.pinned));
-                showToast("✅ 恢复成功，刷新中..."); setTimeout(() => location.reload(), 1000);
-            } catch(e) { showToast("❌ 格式错误！"); }
-        }
-        window.clearAllData = function() { vibrate(); if(confirm("确定清空所有数据？不可恢复！")) { localStorage.clear(); location.reload(); } }
-        window.closeModal = function(event, id) { if (event && event.target !== event.currentTarget) return; document.getElementById(id).classList.remove('show'); }
-        
-        // 搜索
+            vibrate();
+            try {
+                const text = document.getElementById('importTextarea').value.trim();
+                if (!text) return showToast("❌ 请先粘贴备份代码！");
+                const data = JSON.parse(text);
+                if (data.favs) safeSetJSON('cl_favs', data.favs);
+                if (data.custom) safeSetJSON('cl_custom', data.custom);
+                if (data.pinned) safeSetJSON('cl_pinned', data.pinned);
+                if (data.notes) safeSetJSON('cl_notes', data.notes);
+                if (data.visits) safeSetJSON('cl_visits', data.visits);
+                if (data.checkins) safeSetJSON('cl_checkins_' + todayDateStr, data.checkins);
+                if (data.clicks) localStorage.setItem('cl_total_clicks', data.clicks.toString());
+                if (data.theme) localStorage.setItem('cl_theme', data.theme);
+                showToast("✅ 数据恢复成功，正在刷新...");
+                setTimeout(() => location.reload(), 900);
+            } catch (e) {
+                showToast("❌ 格式错误，请检查代码是否完整！");
+            }
+        };
+
+        // ================= 扫码同步系统 =================
+        window.showSyncQR = function() {
+            vibrate();
+            const syncPayload = {
+                favs: favorites,
+                custom: customData,
+                pinned: pinnedSites,
+                notes: siteNotes
+            };
+            const jsonStr = JSON.stringify(syncPayload);
+            // 采用短链接或QR服务器编码
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=5&data=${encodeURIComponent(jsonStr.length > 800 ? JSON.stringify({favs:favorites, custom:customData}) : jsonStr)}`;
+            const img = document.getElementById('qrImage');
+            img.src = qrUrl;
+            document.getElementById('qrModal').classList.add('show');
+        };
+
+        window.copySyncToken = function() {
+            vibrate();
+            const syncPayload = {
+                favs: favorites,
+                custom: customData,
+                pinned: pinnedSites,
+                notes: siteNotes
+            };
+            const jsonStr = JSON.stringify(syncPayload);
+            navigator.clipboard.writeText(jsonStr).then(() => {
+                showToast("✅ 一键同步口令已复制！可在新手机文本恢复处粘贴导入");
+            }).catch(() => fallbackCopy(jsonStr));
+        };
+
+        // ================= 模态弹窗与无系统 confirm 对话框 =================
+        let pendingConfirmFn = null;
+        window.showConfirmModal = function(title, message, onOk) {
+            document.getElementById('confirmTitle').innerText = title || '确认操作';
+            document.getElementById('confirmMessage').innerText = message || '确定继续吗？';
+            pendingConfirmFn = onOk;
+            document.getElementById('confirmModal').classList.add('show');
+        };
+
+        document.getElementById('confirmOkBtn').addEventListener('click', function() {
+            closeModal(null, 'confirmModal');
+            if (typeof pendingConfirmFn === 'function') {
+                pendingConfirmFn();
+                pendingConfirmFn = null;
+            }
+        });
+
+        window.clearAllData = function() {
+            vibrate();
+            showConfirmModal("⚠️ 危险操作", "确定清空所有本地数据？包括收藏、私有链接、全部专属备注和打卡记录，操作后无法恢复！", () => {
+                try {
+                    localStorage.clear();
+                } catch(e) {}
+                showToast("✅ 数据已完全重置，正在重新载入...");
+                setTimeout(() => location.reload(), 700);
+            });
+        };
+
+        window.closeModal = function(event, id) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('show');
+        };
+
+        // ================= 搜索与联想 =================
         window.handleSearch = function(val) {
-            searchTerm = val; renderHomePage();
+            searchTerm = val;
+            renderHomePage();
             const suggest = document.getElementById('suggestBox');
-            if(val.length > 0) {
-                const matches = apiData.filter(item => item.name.toLowerCase().includes(val.toLowerCase())).slice(0, 5);
-                if(matches.length > 0) {
-                    suggest.innerHTML = ''; matches.forEach(m => suggest.innerHTML += `<div class="suggest-item ripple-btn" onclick="applySuggest('${m.name}')">${m.emoji} ${m.name}</div>`);
+            if (val.trim().length > 0) {
+                const searchLower = val.toLowerCase();
+                const matches = apiData.filter(item => {
+                    const note = siteNotes[item.name] || '';
+                    return item.name.toLowerCase().includes(searchLower) || note.toLowerCase().includes(searchLower);
+                }).slice(0, 5);
+
+                if (matches.length > 0) {
+                    suggest.innerHTML = '';
+                    matches.forEach(m => {
+                        suggest.innerHTML += `<div class="suggest-item ripple-btn" onclick="applySuggest('${m.name.replace(/'/g, "\'")}')">${m.emoji || '🌐'} ${m.name}</div>`;
+                    });
                     suggest.classList.add('show');
                 } else suggest.classList.remove('show');
             } else suggest.classList.remove('show');
-        }
+        };
+
         window.applySuggest = function(name) {
-            document.getElementById('searchInput').value = name; searchTerm = name;
-            document.getElementById('suggestBox').classList.remove('show'); document.getElementById('searchInput').blur(); renderHomePage();
+            const input = document.getElementById('searchInput');
+            input.value = name;
+            searchTerm = name;
+            document.getElementById('suggestBox').classList.remove('show');
+            input.blur();
+            renderHomePage();
+        };
+
+        window.clearSearch = function() {
+            document.getElementById('searchInput').value = '';
+            searchTerm = '';
+            document.getElementById('suggestBox').classList.remove('show');
+            renderHomePage();
+        };
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.innerText = msg;
+            t.classList.add('show');
+            if (window.toastTimer) clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
         }
-        window.clearSearch = function() { document.getElementById('searchInput').value = ''; searchTerm = ''; document.getElementById('suggestBox').classList.remove('show'); renderHomePage(); }
 
-        function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-
-        // 启动
+        // 启动应用
         init();
     </script>
-</body>
+ </body>
 </html>
